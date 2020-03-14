@@ -12,9 +12,9 @@ import t from 'tcomb-form-native'; // 0.6.9
 var CList = t.enums({
   I: 'Italy',
   C: 'China',
-  S: 'South Corea',
+  S: 'South Korea',
   J: 'Japan',
-  N: 'None of the above'
+  O: 'Other country'
 
 });
 
@@ -29,8 +29,9 @@ const User = t.struct({
 
 const MyInfo = t.struct({
   yourAge:t.Num,
-  haveYouTravelledRecently: t.Boolean,
   doYouHaveFever:t.Boolean,
+  doYouHaveShortnessOfBreath: t.Boolean,
+  doYouHaveDryCough: t.Boolean,
   haveYouYouHadContactWithSomeoneWhoTestedPositive:t.Boolean,
   countriesVisitedLast_14Days:CList
 });
