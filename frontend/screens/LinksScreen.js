@@ -7,7 +7,7 @@ import { RectButton, ScrollView } from 'react-native-gesture-handler';
 export default function LinksScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <OptionButton
+      {/* <OptionButton
         icon="md-school"
         label="Read the Expo documentation"
         onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
@@ -24,7 +24,7 @@ export default function LinksScreen() {
         label="Ask a question on the forums"
         onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
         isLastOption
-      />
+      /> */}
     </ScrollView>
   );
 }
