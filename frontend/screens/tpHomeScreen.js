@@ -1,83 +1,56 @@
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, TouchableHighlight, View } from 'react-native';
-
-
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 
 import { MonoText } from '../components/StyledText';
 
-import t from 'tcomb-form-native'; // 0.6.9
+export default function HomeScreen() {
+  return (
+    <View style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <View style={styles.welcomeContainer}>
+          <Image
+            source={
+              __DEV__
+                ? require('../assets/images/robot-dev.png')
+                : require('../assets/images/robot-prod.png')
+            }
+            style={styles.welcomeImage}
+          />
+        </View>
 
-var CList = t.enums({
-  I: 'Italy',
-  C: 'China',
-  S: 'South Korea',
-  J: 'Japan',
-  O: 'Other country'
+        <View style={styles.getStartedContainer}>
+          <DevelopmentModeNotice />
 
-});
+          <Text style={styles.getStartedText}>Open up the code for this screen:</Text>
 
-const Form = t.form.Form;
-
-const User = t.struct({
-  email: t.String,
-  username: t.String,
-  password: t.String,
-  terms: t.Boolean
-});
-
-const MyInfo = t.struct({
-  yourAge:t.Num,
-  doYouHaveFever:t.Boolean,
-  doYouHaveShortnessOfBreath: t.Boolean,
-  doYouHaveDryCough: t.Boolean,
-  haveYouYouHadContactWithSomeoneWhoTestedPositive:t.Boolean,
-  countriesVisitedLast_14Days:CList
-});
-
-var options = {
-  fields: {
-    yourAge: {
-      auto: 'placeholders'
-    },
-
-  }
-};
-
-class HomeScreen extends React.Component {
-
-  onPress = function () {
-    // call getValue() to get the values of the form
-    //var value = this.refs.form.getValue();
-
-    console.log('Submit pressed')
-    alert('Submit pressed')
-    // if (value) { // if validation fails, value will be null
-    //   console.log(value); // value here is an instance of Person
-    // }
-  }
-
-  render = function() {
-    return (
-      <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.form}>
-            <Form ref="form" type={MyInfo} options={options}/> 
-            <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableHighlight>
+          <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
+            <MonoText>screens/HomeScreen.js</MonoText>
           </View>
 
+          <Text style={styles.getStartedText}>
+            Change any of the text, save the file, and your app will automatically reload.
+          </Text>
+        </View>
 
-        </ScrollView>
+        <View style={styles.helpContainer}>
+          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
+            <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
 
+      <View style={styles.tabBarInfoContainer}>
+        <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
+
+        <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
+          <MonoText style={styles.codeHighlightText}>navigation/BottomTabNavigator.js</MonoText>
+        </View>
       </View>
-    );
-  }
-
+    </View>
+  );
 }
-
 
 HomeScreen.navigationOptions = {
   header: null,
@@ -106,7 +79,6 @@ function DevelopmentModeNotice() {
   }
 }
 
-
 function handleLearnMorePress() {
   WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
 }
@@ -120,12 +92,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  form: {
-    marginTop:20,
-    marginLeft:50,
-    marginRight:50
+    backgroundColor: '#fff',
   },
   developmentModeText: {
     marginBottom: 20,
@@ -209,24 +176,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
-
-  buttonText: {
-    fontSize: 18,
-    color: 'white',
-    alignSelf: 'center'
-  },
-  button: {
-    height: 36,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginTop:10,
-    marginBottom: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'center'
-  }
 });
-
-
-export default HomeScreen;
