@@ -14,6 +14,8 @@ import * as AppAuth from 'expo-app-auth';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 
+import styles from './styles/styles'
+
 const Stack = createStackNavigator();
 
 
@@ -134,38 +136,4 @@ export default function App(props) {
     
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },  
-  form: {
-    marginTop:20,
-    marginLeft:50,
-    marginRight:50
-  },
-  buttonText: {
-    fontSize: 18,
-    color: 'white',
-    alignSelf: 'center'
-  },
-  button: {
-    height: 36,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginTop:10,
-    marginBottom: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'center'
-  }
-})
+
