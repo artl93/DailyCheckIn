@@ -1,28 +1,29 @@
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {  Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import styles from '../styles/styles'
 
 export default function LinksScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <OptionButton
         icon="md-school"
-        label="Read the Expo documentation"
-        onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
+        label="USA - CDC website"
+        onPress={() => WebBrowser.openBrowserAsync('https://www.cdc.gov/coronavirus/2019-ncov/index.html')}
       />
 
       <OptionButton
         icon="md-compass"
-        label="Read the React Navigation documentation"
-        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+        label="AU - Department of Health website"
+        onPress={() => WebBrowser.openBrowserAsync('https://www.health.gov.au/news/health-alerts/novel-coronavirus-2019-ncov-health-alert?utm_source=health.gov.au&utm_medium=redirect&utm_campaign=digital_transformation&utm_content=health-topics/novel-coronavirus-2019-ncov')}
       />
 
       <OptionButton
         icon="ios-chatboxes"
-        label="Ask a question on the forums"
-        onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
+        label="UK - NHS website"
+        onPress={() => WebBrowser.openBrowserAsync('https://www.nhs.uk/conditions/coronavirus-covid-19/')}
         isLastOption
       />
     </ScrollView>
@@ -44,31 +45,4 @@ function OptionButton({ icon, label, onPress, isLastOption }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-  },
-  contentContainer: {
-    paddingTop: 15,
-  },
-  optionIconContainer: {
-    marginRight: 12,
-  },
-  option: {
-    backgroundColor: '#fdfdfd',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: '#ededed',
-  },
-  lastOption: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  optionText: {
-    fontSize: 15,
-    alignSelf: 'flex-start',
-    marginTop: 1,
-  },
-});
+
