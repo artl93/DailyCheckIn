@@ -137,9 +137,6 @@ const styles = StyleSheet.create({
     },
     button: {
       height: 42,
-      fontFamily: 'Roboto',
-      fontSize: 14,
-      lineHeight: 16,
       borderColor: '#ffffff',
       borderWidth: 1,
       marginTop:10,
@@ -149,9 +146,6 @@ const styles = StyleSheet.create({
     },
     googleButton: {
       height: 42,
-      fontFamily: 'Roboto',
-      fontSize: 14,
-      lineHeight: 16,
       backgroundColor:'#ffffff',
       borderColor: '#ffffff',
       borderWidth: 1,

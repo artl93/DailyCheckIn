@@ -7,6 +7,8 @@ import * as WebBrowser from 'expo-web-browser';
 
 import t from 'tcomb-form-native'; // 0.6.9
 
+import {insert} from '../apis/dcidb'
+
 var customStylesheet = require('../styles/bootstrap')
 
 // override globally the default stylesheet
@@ -18,7 +20,6 @@ var CList = t.enums({
   S: 'South Korea',
   J: 'Japan',
   O: 'Other country'
-
 });
 
 const Form = t.form.Form;
@@ -51,6 +52,10 @@ var options = {
 
 class HomeScreen extends React.Component {
 
+
+  getOneOrZero(value) {
+    return value ? 1 : 0
+  }
   onPress = () => {
     // call getValue() to get the values of the form
     var value = this.refs.form.getValue()
@@ -58,6 +63,17 @@ class HomeScreen extends React.Component {
     console.log(value)
     if (!value) {
       alert('Missing fields') 
+    } else {
+
+      userData = { email: 'blogs@blogs.com',
+                   fever: '0',
+                   cough: '1'}
+
+
+
+      insert( userData ).then( (data) => {
+        // alert(result)
+      })
     }
     // if (value) { // if validation fails, value will be null
     //   console.log(value); // value here is an instance of Person
