@@ -72,7 +72,11 @@ class HomeScreen extends React.Component {
 
 
       insert( userData ).then( (data) => {
-        // alert(result)
+         try {
+            alert( data.result )
+         } catch (exception) {
+           alert(exception)
+         }
       })
     }
     // if (value) { // if validation fails, value will be null
