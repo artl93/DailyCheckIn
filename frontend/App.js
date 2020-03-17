@@ -12,6 +12,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as AppAuth from 'expo-app-auth';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
+
+import LoginScreen from './screens/LoginScreen'
+
 import useLinking from './navigation/useLinking';
 
 import styles from './styles/styles'
@@ -19,26 +22,7 @@ import styles from './styles/styles'
 const Stack = createStackNavigator();
 
 
-// Login with microsoft
 
-const configMS = {
-  issuer: `https://login.microsoftonline.com/${process.env.MS_TENANT_ID}`,
-  clientId: process.env.MS_CLIENT_ID,
-  redirectUrl: 'com.myapp://oauth/redirect',
-  // scopes: ['openid', 'profile', 'email', 'offline_access']
-};
-
-// add other logon types here
-
-// Google
-const configGoogle = {
-  issuer: 'https://login.microsoftonline.com/8ca09082-aa44-41c9-bd4e-7a6b59c90ba0',
-  clientId: 'xx',
-  redirectUrl: 'com.myapp://oauth/redirect',
-  // scopes: ['openid', 'profile', 'email', 'offline_access']
-};
-
-// Facebook
 
 
 export async function signInAsync(myConfig) {
@@ -56,9 +40,13 @@ export default function App(props) {
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
 
-  let [authState, setAuthState] = useState(null);
+  // let [authState, setAuthState] = useState(null);
   let [isLoggedOn,setLoggedOn] = React.useState(false);
 
+
+  const handleLogOn = (LogonState) => {
+    setLoggedOn(LogonState)
+  }
   // Load any resources or data that we need prior to rendering the app
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
@@ -103,7 +91,8 @@ export default function App(props) {
         </View>
         :
         <View style={styles.container}>
-          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          <LoginScreen handleLogOn={handleLogOn}/>
+          {/* <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             <View style={styles.form}>         
               <TouchableHighlight 
                 style={styles.button} 
@@ -129,7 +118,7 @@ export default function App(props) {
                 <Text style={styles.buttonText}>Sign In with Google</Text>
               </TouchableHighlight>
             </View>
-          </ScrollView>
+          </ScrollView> */}
         </View>
     )
   }

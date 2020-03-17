@@ -5,8 +5,6 @@ import styles from '../styles/styles'
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 
-import { MonoText } from '../components/StyledText';
-
 import t from 'tcomb-form-native'; // 0.6.9
 
 var customStylesheet = require('../styles/bootstrap')
@@ -53,12 +51,14 @@ var options = {
 
 class HomeScreen extends React.Component {
 
-  onPress = function () {
+  onPress = () => {
     // call getValue() to get the values of the form
-    //var value = this.refs.form.getValue();
+    var value = this.refs.form.getValue()
 
-    console.log('Submit pressed')
-    alert('Submit pressed')
+    console.log(value)
+    if (!value) {
+      alert('Missing fields') 
+    }
     // if (value) { // if validation fails, value will be null
     //   console.log(value); // value here is an instance of Person
     // }
@@ -72,14 +72,14 @@ class HomeScreen extends React.Component {
           <View style={styles.welcomeContainer}>
             <Image
               source={
-              require('../assets/images/logo.png')
+                require('../assets/images/logo.png')
               }
               style={styles.welcomeImage}
             />
           </View>
           <View style={styles.form}>
             <Form ref="form" type={MyInfo} style={styles.form} options={options}/> 
-            <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
+            <TouchableHighlight style={styles.button} onPress={this.onPress} >
               <Text style={styles.buttonText}>Submit</Text>
             </TouchableHighlight>
           </View>
