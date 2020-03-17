@@ -1,21 +1,20 @@
-// const insert_api = 'https://lxrpbe.azurewebsites.net/api/busLocations?code=skedW23Fclex0SYprCCTJkNtcV0HPdMDIGLfZSYA3NJDJLaoCGugDQ=='
+const insert_api = 'https://dciberjs.azurewebsites.net/api/insert?code=66vOqKaAhEdsocLSMzrhsxCEGn3nxB7YQgrw3kUSxbdxcx47MnaDBw=='
 
 // local
-const insert_api = 'http://localhost:7071/api/insert/'
+// const insert_api = 'http://localhost:7071/api/insert/'
 
 const headers = {
   'Accept': 'application/json'
 }
 
 export const insert = (userData) => {
-    alert('will insert '+ userData.cough)
-//   fetch(`${insert_api}?email=${userData.email}&fever=${userData.fever}&cough=${userData.cough}`, { headers }) 
-    return fetch(`${insert_api}?email=blogs@blogss.com&fever=1&cough=0`, { headers }) 
+    return fetch(`${insert_api}&email=${userData.email}&fever=${userData.fever}&cough=${userData.cough}`, 
+    { headers, method: 'POST' }) 
     .then( (res) =>{
         return res.json()
     })
     .then( (data) => {
-      return data
+      return JSON.parse(data)
     })
     .catch(error => { 
       console.log('update failed', error) 

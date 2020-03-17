@@ -38,7 +38,7 @@ namespace dcidb
             string responseMessage = "";
             
             if (string.IsNullOrEmpty(email)) {
-                responseMessage = "{ 'result': 'email parameter missing in your request'} ";
+                responseMessage = "{\"result\":\"email parameter missing in your request\"}";
                 return new OkObjectResult(responseMessage);
 
             } else {
@@ -52,11 +52,11 @@ namespace dcidb
                 int writeResult = WriteToDB(email,fever,cough);
                 
                 if (writeResult >= 0) {
-                    responseMessage = "{ 'result': 'wrote " + writeResult + " records to db'} ";
+                    responseMessage = "{\"result\":\"wrote " + writeResult + " record(s) to db\"}";
                     return new OkObjectResult(responseMessage);
                 }
                 else {
-                    responseMessage = "{ 'result': 'error  # " + writeResult + "  when writting to database'} ";
+                    responseMessage = "{\"result\":\"error # " + writeResult + " when uploading data\"}";
                     return new OkObjectResult(responseMessage);
                 }
             }
