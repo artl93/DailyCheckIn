@@ -130,6 +130,11 @@ const styles = StyleSheet.create({
       color: 'white',
       alignSelf: 'center'
     },
+    blackButtonText: {
+      fontSize: 18,
+      color: 'black',
+      alignSelf: 'center'
+    },
     button: {
       height: 42,
       fontFamily: 'Roboto',
@@ -141,8 +146,20 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       alignSelf: 'stretch',
       justifyContent: 'center'
+    },
+    googleButton: {
+      height: 42,
+      fontFamily: 'Roboto',
+      fontSize: 14,
+      lineHeight: 16,
+      backgroundColor:'#ffffff',
+      borderColor: '#ffffff',
+      borderWidth: 1,
+      marginTop:10,
+      marginBottom: 10,
+      alignSelf: 'stretch',
+      justifyContent: 'center'
     }
-
 
   });
 
