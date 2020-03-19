@@ -90,12 +90,6 @@ class HomeScreen extends React.Component {
 
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                require('../assets/images/logo.png')
-              }
-              style={styles.welcomeImage}
-            />
           </View>
           <View style={styles.form}>
             <Form ref="form" type={MyInfo} style={styles.form} options={options}/> 

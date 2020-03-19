@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Image, Platform, Text, TouchableOpacity, TouchableHighlight, View } from 'react-native';
 import styles from '../styles/styles'
-
+import Privacy from './Privacy'
 import { ScrollView } from 'react-native-gesture-handler';
 
 import t from 'tcomb-form-native'; // 0.6.9
 
-var customStylesheet = require('../styles/bootstrap')
+var customStylesheet = require('../styles/bootstrapLogin')
 
 // override globally the default stylesheet
 
@@ -74,9 +74,9 @@ class LoginScreen extends React.Component {
 
   render = () => {
     return (
-      <View style={styles.container}>
+      <View style={styles.containerLogin}>
 
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <ScrollView style={styles.containerLogin} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
             <Image
               source={
@@ -95,14 +95,14 @@ class LoginScreen extends React.Component {
               style={styles.form} 
               options={options}
             /> 
-            <TouchableHighlight style={styles.button} onPress={
+            <TouchableHighlight style={styles.buttonLogin} onPress={
                 async () => {
                       // const authState = await signInAsync(configMS);
                       // setAuthState(_authState);
                       this.props.handleLogOn(true)
                 }
             }>
-              <Text style={styles.buttonText}>Log In</Text>
+              <Text style={styles.buttonLoginText}>Log In</Text>
             </TouchableHighlight>
 
               <TouchableHighlight style={styles.googleButton} onPress={
@@ -118,7 +118,7 @@ class LoginScreen extends React.Component {
             <TouchableHighlight style={ {marginTop:30}}
               onPress={this.toggleSigUpLogin}
               >
-              <Text style={styles.buttonText}>{
+              <Text style={styles.buttonLoginText}>{
                !this.state.newUser 
                ? 'Sign up' 
                : 'Log in'
@@ -126,7 +126,7 @@ class LoginScreen extends React.Component {
               </Text>
             </TouchableHighlight>
           </View>
-
+          <Privacy />
         </ScrollView>
 
       </View>
