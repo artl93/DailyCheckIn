@@ -3,16 +3,27 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: '#E5E5E5',
+    },
+    containerLogin: {
+      flex: 1,
       backgroundColor: '#043862',
     },
     form: {
       marginTop:20,
       marginLeft:50,
-      marginRight:50,
-      backgroundColor:'#043862',
-      color: 'white'
+      marginRight:50
     },
-
+    bold: {
+      marginBottom:10,
+      fontWeight:"bold"
+    },
+    privacy: {
+      fontSize: 15,
+      marginTop:20,
+      marginLeft:50,
+      marginRight:50
+    },
     navigator: {
       backgroundColor: '#043862',
       color: '#ffffff'
@@ -127,7 +138,12 @@ const styles = StyleSheet.create({
   
     buttonText: {
       fontSize: 18,
-      color: 'white',
+      color: '#201F1E',
+      alignSelf: 'center'
+    },
+    buttonLoginText: {
+      fontSize: 18,
+      color: '#ffffff',
       alignSelf: 'center'
     },
     blackButtonText: {
@@ -136,6 +152,15 @@ const styles = StyleSheet.create({
       alignSelf: 'center'
     },
     button: {
+      height: 42,
+      borderColor: '#201F1E',
+      borderWidth: 1,
+      marginTop:10,
+      marginBottom: 10,
+      alignSelf: 'stretch',
+      justifyContent: 'center'
+    },
+    buttonLogin: {
       height: 42,
       borderColor: '#ffffff',
       borderWidth: 1,

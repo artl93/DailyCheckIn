@@ -7,8 +7,8 @@
 
 import { Platform } from "react-native";
 
-var LABEL_COLOR = "#201F1E";
-var INPUT_COLOR = "#201F1E";
+var LABEL_COLOR = "#ffffff";
+var INPUT_COLOR = "#ffffff";
 var ERROR_COLOR = "#a94442";
 var HELP_COLOR = "#999999";
 var BORDER_COLOR = "#cccccc";
