@@ -60,7 +60,8 @@ const configGoogle = {
 class LoginScreen extends React.Component {
 
   state = {
-    newUser : false
+    newUser : false,
+    showPrivacy: false
   }
 
   toggleSigUpLogin = () => {
@@ -85,6 +86,8 @@ class LoginScreen extends React.Component {
               style={styles.welcomeImage}
             />
           </View>
+
+          {!this.state.showPrivacy &&
           <View style={styles.form}>
             <Form ref="form" 
               type={ 
@@ -99,9 +102,12 @@ class LoginScreen extends React.Component {
                 async () => {
                       // const authState = await signInAsync(configMS);
                       // setAuthState(_authState);
+                      if (this.state.newUser) {
+                        this.setState( { showPrivacy: true })
+                      }
                       this.props.handleLogOn(true)
                 }
-            }>
+              }>
               <Text style={styles.buttonLoginText}>Log In</Text>
             </TouchableHighlight>
 
@@ -125,8 +131,9 @@ class LoginScreen extends React.Component {
               }
               </Text>
             </TouchableHighlight>
-          </View>
-          <Privacy />
+            </View> }
+          { this.state.showPrivacy &&
+          <Privacy handleLogOn={this.props.handleLogOn} /> }
         </ScrollView>
 
       </View>
