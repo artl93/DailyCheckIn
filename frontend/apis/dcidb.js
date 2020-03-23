@@ -8,7 +8,34 @@ const headers = {
 }
 
 export const insert = (userData) => {
-    return fetch(`${insert_api}&email=${userData.email}&fever=${userData.fever}&cough=${userData.cough}`, 
+
+    let params = ''
+
+    if (userData.email !== null)
+      params += `&email=${userData.email}` 
+
+    if (userData.fever !== null)
+      params += `&fever=${userData.fever}`
+
+    if (userData.cough !== null)
+      params += `&cough=${userData.cough}`     
+
+    if (userData.feeling !== null)
+      params += `&feeling=${userData.feeling}` 
+
+    if (userData.shortnessOfBreath !== null)
+      params += `&shortnessOfBreath=${userData.shortnessOfBreath}`
+
+    if (userData.tiredness !== null)
+      params += `&tiredness=${userData.tiredness}`     
+
+    if (userData.contact !== null)
+      params += `&contact=${userData.contact}` 
+
+    if (userData.countries !== null)
+      params += `&countries=${userData.countries}`    
+
+    return fetch(`${insert_api}${params}`, 
     { headers, method: 'POST' }) 
     .then( (res) =>{
         return res.json()
