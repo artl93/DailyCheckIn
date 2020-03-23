@@ -3,16 +3,39 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: '#E5E5E5',
+    },
+    containerLogin: {
+      flex: 1,
       backgroundColor: '#043862',
     },
     form: {
       marginTop:20,
       marginLeft:50,
-      marginRight:50,
-      backgroundColor:'#043862',
-      color: 'white'
+      marginRight:50
     },
-
+    bold: {
+      fontWeight:"bold"
+    },
+    privacy:{
+      marginLeft:50,
+      marginRight:50,
+      marginBottom:40
+    },
+    privacyText: {
+      fontStyle: 'normal',
+      fontWeight: '300',
+      fontSize: 16,
+      lineHeight: 22,
+      /* or 137% */
+      
+      letterSpacing: 0.5,
+      
+      /* Text / Hover-Pressed text */
+      
+      color: '#201F1E',
+      marginTop:20
+    },
     navigator: {
       backgroundColor: '#043862',
       color: '#ffffff'
@@ -26,7 +49,6 @@ const styles = StyleSheet.create({
       marginRight: 12,
     },
     option: {
-      backgroundColor: '#043862',
       paddingHorizontal: 15,
       paddingVertical: 15,
       borderWidth: StyleSheet.hairlineWidth,
@@ -36,14 +58,22 @@ const styles = StyleSheet.create({
     lastOption: {
       borderBottomWidth: StyleSheet.hairlineWidth,
     },
+
+    sideBySideL:{
+      width:'50%',
+      marginRight:6
+    },
+    sideBySideR:{
+      width:'50%',
+      marginLeft:6
+    },
+
     optionText: {
       fontSize: 15,
       alignSelf: 'flex-start',
       marginTop: 1,
-      color:'white'
+      color:'#201F1E'
     },
-
-
     developmentModeText: {
       marginBottom: 20,
       color: 'rgba(0,0,0,0.4)',
@@ -127,7 +157,12 @@ const styles = StyleSheet.create({
   
     buttonText: {
       fontSize: 18,
-      color: 'white',
+      color: '#201F1E',
+      alignSelf: 'center'
+    },
+    buttonLoginText: {
+      fontSize: 18,
+      color: '#ffffff',
       alignSelf: 'center'
     },
     blackButtonText: {
@@ -136,6 +171,22 @@ const styles = StyleSheet.create({
       alignSelf: 'center'
     },
     button: {
+      height: 42,
+      borderColor: '#201F1E',
+      borderWidth: 1,
+      marginTop:10,
+      marginBottom: 10,
+      alignSelf: 'stretch',
+      justifyContent: 'center'
+    },
+    selected: {
+      backgroundColor: '#6979F8',
+      borderColor: '#6979F8',
+    },
+    selectedButton: {
+      color:'white'
+    },
+    buttonLogin: {
       height: 42,
       borderColor: '#ffffff',
       borderWidth: 1,
