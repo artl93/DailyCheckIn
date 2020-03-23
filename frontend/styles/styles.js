@@ -15,14 +15,26 @@ const styles = StyleSheet.create({
       marginRight:50
     },
     bold: {
-      marginBottom:10,
       fontWeight:"bold"
     },
-    privacy: {
-      fontSize: 15,
-      marginTop:20,
+    privacy:{
       marginLeft:50,
-      marginRight:50
+      marginRight:50,
+      marginBottom:40
+    },
+    privacyText: {
+      fontStyle: 'normal',
+      fontWeight: '300',
+      fontSize: 16,
+      lineHeight: 22,
+      /* or 137% */
+      
+      letterSpacing: 0.5,
+      
+      /* Text / Hover-Pressed text */
+      
+      color: '#201F1E',
+      marginTop:20
     },
     navigator: {
       backgroundColor: '#043862',
@@ -37,7 +49,6 @@ const styles = StyleSheet.create({
       marginRight: 12,
     },
     option: {
-      backgroundColor: '#043862',
       paddingHorizontal: 15,
       paddingVertical: 15,
       borderWidth: StyleSheet.hairlineWidth,
@@ -47,14 +58,22 @@ const styles = StyleSheet.create({
     lastOption: {
       borderBottomWidth: StyleSheet.hairlineWidth,
     },
+
+    sideBySideL:{
+      width:'50%',
+      marginRight:6
+    },
+    sideBySideR:{
+      width:'50%',
+      marginLeft:6
+    },
+
     optionText: {
       fontSize: 15,
       alignSelf: 'flex-start',
       marginTop: 1,
-      color:'white'
+      color:'#201F1E'
     },
-
-
     developmentModeText: {
       marginBottom: 20,
       color: 'rgba(0,0,0,0.4)',
@@ -159,6 +178,13 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       alignSelf: 'stretch',
       justifyContent: 'center'
+    },
+    selected: {
+      backgroundColor: '#6979F8',
+      borderColor: '#6979F8',
+    },
+    selectedButton: {
+      color:'white'
     },
     buttonLogin: {
       height: 42,

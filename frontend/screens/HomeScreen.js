@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, Platform, Text, TouchableOpacity, TouchableHighlight, View } from 'react-native';
+import { Image, Text, TouchableHighlight, View } from 'react-native';
 import styles from '../styles/styles'
 
 import { ScrollView } from 'react-native-gesture-handler';
@@ -22,6 +22,14 @@ var CList = t.enums({
   O: 'Other country'
 });
 
+var Feeling = t.enums({
+  1: 'Great',
+  2: 'OK',
+  3: 'Average',
+  4: 'Bad',
+  5: 'Terrible'
+});
+
 const Form = t.form.Form;
 
 
@@ -33,30 +41,49 @@ const User = t.struct({
 });
 
 const MyInfo = t.struct({
-  yourAge:t.Num,
-  doYouHaveFever:t.Boolean,
-  doYouHaveShortnessOfBreath: t.Boolean,
-  doYouHaveDryCough: t.Boolean,
-  haveYouYouHadContactWithSomeoneWhoTestedPositive:t.Boolean,
-  countriesVisitedLast_14Days:CList
+  feeling:t.maybe(Feeling),
+  fever:t.Boolean,
+  shortnessOfBreath: t.Boolean,
+  cough: t.Boolean,
+  tiredness: t.Boolean,
+  contact:t.Boolean,
+  countries:t.maybe(CList)
 });
 
 var options = {
   stylesheet: customStylesheet,
-  // fields: {
-  //   yourAge: {
-  //     auto: 'placeholders'
-  //   }
-  // }
+  fields: {
+    feeling: {
+      label: 'Overall, how do you feel today?' 
+    },
+    fever: {
+      label: '\nDo you have any of these?\n\nFever'
+    },
+    cough: {
+      label: 'Dry cough'
+    },
+    contact: {
+      label: '\nHave you been in contact with anyone who tested postitive to COVID-19?'
+    },
+    countries: {
+      label: '\nHave you been to any of the countries below?'
+    }
+  }
+
 };
 
 class HomeScreen extends React.Component {
 
 
   getOneOrZero(value) {
-    return value ? 1 : 0
+    return value ? '1' : '0'
   }
-  onPress = () => {
+
+  cancel = () => {
+
+  }
+
+  submit = () => {
     // call getValue() to get the values of the form
     var value = this.refs.form.getValue()
 
@@ -65,11 +92,16 @@ class HomeScreen extends React.Component {
       alert('Missing fields') 
     } else {
 
-      userData = { email: 'blogs@blogs.com',
-                   fever: '0',
-                   cough: '1'}
-
-
+    const userData = 
+      { email: 'blogs@blogs.com',
+        fever: this.getOneOrZero(value.fever),
+        cough: this.getOneOrZero(value.cough),
+        feeling:value.feeling,
+        shortnessOfBreath: this.getOneOrZero(value.shortnessOfBreath),
+        tiredness: this.getOneOrZero(value.tiredness),
+        contact:this.getOneOrZero(value.contact),
+        countries:value.countries
+      }
 
       insert( userData ).then( (data) => {
          try {
@@ -79,9 +111,7 @@ class HomeScreen extends React.Component {
          }
       })
     }
-    // if (value) { // if validation fails, value will be null
-    //   console.log(value); // value here is an instance of Person
-    // }
+
   }
 
   render = function() {
@@ -89,15 +119,21 @@ class HomeScreen extends React.Component {
       <View style={styles.container}>
 
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+
           <View style={styles.welcomeContainer}>
+          <Text>{new Date().toUTCString()}</Text>
           </View>
           <View style={styles.form}>
             <Form ref="form" type={MyInfo} style={styles.form} options={options}/> 
-            <TouchableHighlight style={styles.button} onPress={this.onPress} >
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableHighlight>
+            <View style={{ flexDirection: 'row',marginBottom:30 }}>
+              <TouchableHighlight style={[styles.button,styles.selected,styles.sideBySideL]} onPress={this.submit} >
+                <Text style={[styles.buttonText,styles.selectedButton]}>Submit</Text>
+              </TouchableHighlight>
+              <TouchableHighlight style={[styles.button,styles.sideBySideR]} onPress={this.onPress} >
+                <Text style={styles.buttonText}>Clear</Text>
+              </TouchableHighlight>
+            </View>
           </View>
-
 
         </ScrollView>
 
