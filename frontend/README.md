@@ -15,8 +15,8 @@ $ npm install -g expo-cli
 To run the app:
 
 ```bash
-$ npm install
-$ expo start
+$ yarn install
+$ yarn start
 ```
 You then need to run the Expo app in your mobile device. 
 
