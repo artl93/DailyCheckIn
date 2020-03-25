@@ -29,11 +29,14 @@ export const insert = (userData) => {
     if (userData.tiredness !== null)
       params += `&tiredness=${userData.tiredness}`     
 
+    if (userData.soreThroat !== null)
+      params += `&soreThroat=${userData.soreThroat}`  
+
     if (userData.contact !== null)
       params += `&contact=${userData.contact}` 
 
-    if (userData.countries !== null)
-      params += `&countries=${userData.countries}`    
+    if (userData.countryVisited !== null)
+      params += `&countryVisited=${userData.countryVisited}`    
 
     return fetch(`${insert_api}${params}`, 
     { headers, method: 'POST' }) 
