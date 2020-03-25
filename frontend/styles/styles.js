@@ -63,9 +63,16 @@ const styles = StyleSheet.create({
       width:'50%',
       marginRight:6
     },
+    
     sideBySideR:{
       width:'50%',
       marginLeft:6
+    },
+
+    likertButton: {
+      width:'20%',
+      margin:2,
+      borderRadius:20
     },
 
     optionText: {

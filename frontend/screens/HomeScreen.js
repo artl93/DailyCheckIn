@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, Text, TouchableHighlight, View } from 'react-native';
+import { Image, Text, TouchableHighlight, View, Switch, Button } from 'react-native';
 import styles from '../styles/styles'
 
 import { ScrollView } from 'react-native-gesture-handler';
@@ -121,7 +121,25 @@ class HomeScreen extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
           <View style={styles.welcomeContainer}>
-          <Text>{new Date().toUTCString()}</Text>
+            <Text>{new Date().toUTCString()}</Text>
+          </View>
+          <View style={[styles.form,{dislay:'flex', flexDirection:'row'}]}>
+            <TouchableHighlight style={[styles.button,styles.likertButton]}>
+              <Text styles={{selfAlign:'center'}}>Great</Text>
+            </TouchableHighlight>
+            <TouchableHighlight style={[styles.button,styles.likertButton]}>
+              <Text style={styles.likertButtonText}>Good</Text>
+            </TouchableHighlight>
+            <TouchableHighlight style={[styles.button,styles.likertButton]}>
+              <Text>OK</Text>
+            </TouchableHighlight>
+            <TouchableHighlight style={[styles.button,styles.likertButton]}>
+              <Text>Unwell</Text>
+            </TouchableHighlight>
+            <TouchableHighlight style={[styles.button,styles.likertButton]}>
+              <Text>Help!</Text>
+            </TouchableHighlight>
+
           </View>
           <View style={styles.form}>
             <Form ref="form" type={MyInfo} style={styles.form} options={options}/> 
