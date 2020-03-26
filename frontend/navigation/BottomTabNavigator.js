@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import ChartsScreen from '../screens/ChartsScreen';
 import LinksScreen from '../screens/LinksScreen';
 import Colors from '../constants/Colors';
 
@@ -27,8 +28,7 @@ export default function BottomTabNavigator({ navigation, route }) {
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME} tabBarOptions={ {style: styles.navigator,
                                                                                 activeTintColor: Colors.tabIconSelected,
                                                                                 inactiveTintColor: Colors.tabIconDefault } }>
-      <BottomTab.Screen
-        
+      <BottomTab.Screen      
         name="Home"
         component={HomeScreen}
         options={{
@@ -36,6 +36,15 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
         }}
       />
+      <BottomTab.Screen      
+        name="Charts"
+        component={ChartsScreen}
+        options={{
+          title: 'Charts',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+        }}
+      />
+
       <BottomTab.Screen
         name="Links"
         component={LinksScreen}
@@ -55,6 +64,8 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'Your daily check';
+    case 'Chart':
+      return 'Your charts';
     case 'Links':
       return 'Links';
   }

@@ -1,116 +1,102 @@
 import * as React from 'react';
-import { Image, Text, TouchableHighlight, View } from 'react-native';
+import { Alert,Picker, Text, TouchableHighlight, View, Switch, Button } from 'react-native';
 import styles from '../styles/styles'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 
-import t from 'tcomb-form-native'; // 0.6.9
-
 import {insert} from '../apis/dcidb'
 
-var customStylesheet = require('../styles/bootstrap')
 
-// override globally the default stylesheet
-
-
-var CList = t.enums({
-  I: 'Italy',
-  C: 'China',
-  S: 'South Korea',
-  J: 'Japan',
-  O: 'Other country'
-});
-
-var Feeling = t.enums({
-  1: 'Great',
-  2: 'OK',
-  3: 'Average',
-  4: 'Bad',
-  5: 'Terrible'
-});
-
-const Form = t.form.Form;
+const Countries = 
+[ '- none -',
+  'Italy',
+  'China',
+  'South Korea',
+  'Japan',
+  'Other country' ]
 
 
-const User = t.struct({
-  email: t.String,
-  username: t.String,
-  password: t.String,
-  terms: t.Boolean
-});
 
-const MyInfo = t.struct({
-  feeling:t.maybe(Feeling),
-  fever:t.Boolean,
-  shortnessOfBreath: t.Boolean,
-  cough: t.Boolean,
-  tiredness: t.Boolean,
-  contact:t.Boolean,
-  countries:t.maybe(CList)
-});
+const likertScale = { 1:'Help!',
+                      2:'Unwell',
+                      3:'OK',
+                      4:'Good',
+                      5:'Great'}
 
-var options = {
-  stylesheet: customStylesheet,
-  fields: {
-    feeling: {
-      label: 'Overall, how do you feel today?' 
-    },
-    fever: {
-      label: '\nDo you have any of these?\n\nFever'
-    },
-    cough: {
-      label: 'Dry cough'
-    },
-    contact: {
-      label: '\nHave you been in contact with anyone who tested postitive to COVID-19?'
-    },
-    countries: {
-      label: '\nHave you been to any of the countries below?'
-    }
-  }
-
-};
+const downScale = [5,4,3,2,1]
 
 class HomeScreen extends React.Component {
 
+  state = {
+    feeling:3,
+    fever:false,
+    shortnessOfBreath: false,
+    cough: false,
+    tiredness: false,
+    soreThroat: false,
+    contact: false,
+    countryVisited: Countries[0],
+    spinner:false,
+    spinnerText:'Saving...',
+    alertIsOn:false
+  } 
 
-  getOneOrZero(value) {
-    return value ? '1' : '0'
+  clearAllVAlues(){
+    this.setState({
+      feeling:3,
+      fever:false,
+      shortnessOfBreath: false,
+      cough: false,
+      tiredness: false,
+      soreThroat: false,
+      contact: false,
+      countryVisited: Countries[0] 
+    })
   }
 
-  cancel = () => {
-
+  isEqual(v1,v2) {
+    return v1 === v2
   }
 
-  submit = () => {
-    // call getValue() to get the values of the form
-    var value = this.refs.form.getValue()
+  submit =() => {
 
-    console.log(value)
-    if (!value) {
-      alert('Missing fields') 
-    } else {
+    this.setState( {spinner:true})
 
     const userData = 
       { email: 'blogs@blogs.com',
-        fever: this.getOneOrZero(value.fever),
-        cough: this.getOneOrZero(value.cough),
-        feeling:value.feeling,
-        shortnessOfBreath: this.getOneOrZero(value.shortnessOfBreath),
-        tiredness: this.getOneOrZero(value.tiredness),
-        contact:this.getOneOrZero(value.contact),
-        countries:value.countries
+        fever: this.state.fever,
+        cough: this.state.cough,
+        feeling:this.state.feeling,
+        shortnessOfBreath: this.state.shortnessOfBreath,
+        tiredness: this.state.tiredness,
+        contact:this.state.contact,
+        soreThroat:this.state.soreThroat,
+        countryVisited:this.state.countryVisited
       }
 
-      insert( userData ).then( (data) => {
+    this
+
+    insert( userData ).then( (data) => {
          try {
-            alert( data.result )
+
+            Alert.alert( 'Success!', 
+            data.result,
+            [
+                    {text: 'Ok', onPress: () => this.setState(({spinner:false}))},
+            ])
+
+            // this.setState( {spinner:false})
          } catch (exception) {
-           alert(exception)
+          Alert.alert( 'Error!', 
+          exception,
+          [
+                  {text: 'Cancel', onPress: () => this.setState(({spinner:false}))},
+          ])        
          }
       })
-    }
+    
 
   }
 
@@ -118,27 +104,87 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
 
+        <Spinner
+                visible={this.state.spinner}
+                textContent={this.spinnerText}
+        />
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
           <View style={styles.welcomeContainer}>
-          <Text>{new Date().toUTCString()}</Text>
+            <Text>{new Date().toUTCString()}</Text>
           </View>
+
           <View style={styles.form}>
-            <Form ref="form" type={MyInfo} style={styles.form} options={options}/> 
-            <View style={{ flexDirection: 'row',marginBottom:30 }}>
+
+            {/* Overall Feeling */}
+
+            <Text style={styles.questionText}>Overall, how do you feel today?</Text>
+            <View style={styles.likertContainer}>
+              { downScale.map( (key) =>
+                  <TouchableHighlight key={key} style={[styles.button,styles.likertButton, this.isEqual(this.state.feeling,key) && styles.selected ]}
+                    onPress={ () => this.setState({feeling: key})}>
+                    <Text style={[styles.likertButtonText,this.isEqual(this.state.feeling,key) && styles.selectedButton ]}>{likertScale[key]}</Text>
+                  </TouchableHighlight>
+              )}
+            </View>
+
+            {/* Symptoms */}
+
+            <Text style={styles.questionText}>Do you have any of these symptoms?</Text>
+            <View style={styles.question}>
+              <Switch value={this.state.fever} onValueChange={ (value) => this.setState( {fever: value}) }style={{marginRight:5}}></Switch>
+              <Text style={styles.buttonText}>Fever</Text>
+            </View>
+            <View style={styles.question}>
+              <Switch value={this.state.shortnessOfBreath} onValueChange={ (value) => this.setState( {shortnessOfBreath: value}) }style={{marginRight:5}}></Switch>
+              <Text style={styles.buttonText}>Shortness of breath</Text>
+            </View>
+
+            <View style={styles.question}>
+              <Switch value={this.state.cough} onValueChange={ (value) => this.setState( {cough: value}) }style={{marginRight:5}}></Switch>
+              <Text style={styles.buttonText}>Dry Cough</Text>
+            </View>
+
+            <View style={styles.question}>
+              < Switch value={this.state.soreThroat} onValueChange={ (value) => this.setState( {soreThroat: value}) }style={{marginRight:5}}></Switch>
+              <Text style={styles.buttonText}>Sore Throat</Text>
+            </View>
+
+            <Text style={styles.questionText}>Have you been in contact with anyone who tested positive to COVID-19?</Text>
+            <View style={styles.question}>
+              <Switch value={this.state.contact} onValueChange={ (value) => this.setState( {contact: value}) }style={{marginRight:5}}></Switch>
+              <Text style={styles.buttonText}></Text>
+            </View>
+
+            <Text style={styles.questionText}>Have you visited any of the countries below within the last 14 days?</Text>
+             
+              <Picker
+                selectedValue={this.state.countryVisited}
+                style={{ marginTop:-20, width: '100%'}}
+                onValueChange={(value) =>
+                  this.setState({countryVisited: value})
+                }>
+                {Countries.map ( (value) => 
+                    <Picker.Item key={value} label={value} value={value} />
+                  )
+                }
+              </Picker>
+
+              <View style={styles.buttonGroup}>
               <TouchableHighlight style={[styles.button,styles.selected,styles.sideBySideL]} onPress={this.submit} >
                 <Text style={[styles.buttonText,styles.selectedButton]}>Submit</Text>
               </TouchableHighlight>
-              <TouchableHighlight style={[styles.button,styles.sideBySideR]} onPress={this.onPress} >
+              <TouchableHighlight style={[styles.button,styles.sideBySideR]} onPress={() => this.clearAllVAlues() } >
                 <Text style={styles.buttonText}>Clear</Text>
               </TouchableHighlight>
             </View>
+
           </View>
 
         </ScrollView>
 
       </View>
-    );
+    )
   }
 
 }
@@ -147,40 +193,6 @@ class HomeScreen extends React.Component {
 HomeScreen.navigationOptions = {
   header: null,
 };
-
-function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
-
-    return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use useful development
-        tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
-    );
-  }
-}
-
-
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-  );
-}
 
 
 
