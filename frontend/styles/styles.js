@@ -186,24 +186,25 @@ const styles = StyleSheet.create({
       alignSelf: 'center'
     },
 
-    likertContainer: {
+    ratingContainer: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'space-evenly',
       flexDirection:'row'
     },
 
-    likertButton: {
+    ratingButton: {
       margin:2,
       width:40,
       display:'flex',
       borderRadius:20
     },
 
-    likertButtonText: {
+    ratingButtonText: {
       fontSize: 10,
       color: '#201F1E',
-      alignSelf: 'center'
+      alignSelf: 'center',
+      textAlign: 'center'
     },
 
     buttonLoginText: {
