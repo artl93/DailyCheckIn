@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
       backgroundColor: '#043862',
     },
     form: {
-      marginTop:20,
       marginLeft:50,
       marginRight:50
     },
@@ -59,14 +58,24 @@ const styles = StyleSheet.create({
       borderBottomWidth: StyleSheet.hairlineWidth,
     },
 
+    buttonGroup:{ 
+      flexDirection: 'row',
+      marginTop:50,
+      marginBottom: 50 
+    },
+
+
     sideBySideL:{
       width:'50%',
       marginRight:6
     },
+    
     sideBySideR:{
       width:'50%',
       marginLeft:6
     },
+
+
 
     optionText: {
       fontSize: 15,
@@ -154,12 +163,49 @@ const styles = StyleSheet.create({
       fontSize: 14,
       color: '#2e78b7',
     },
-  
+
+    question: {
+      display:'flex',
+      flexDirection:'row',
+      textAlignVertical:'center',
+      alignContent:"stretch",
+      justifyContent:"flex-start",
+      padding:8
+    },
+    questionText: {
+      fontSize: 18,
+      marginTop:20,
+      marginBottom:10,
+      color: '#201F1E',
+      alignSelf: 'flex-start'
+    },
+    
     buttonText: {
       fontSize: 18,
       color: '#201F1E',
       alignSelf: 'center'
     },
+
+    likertContainer: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'space-evenly',
+      flexDirection:'row'
+    },
+
+    likertButton: {
+      margin:2,
+      width:40,
+      display:'flex',
+      borderRadius:20
+    },
+
+    likertButtonText: {
+      fontSize: 10,
+      color: '#201F1E',
+      alignSelf: 'center'
+    },
+
     buttonLoginText: {
       fontSize: 18,
       color: '#ffffff',
