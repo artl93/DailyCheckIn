@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Alert,Picker, Text, TouchableHighlight, View, Switch, Button } from 'react-native';
+import { Text, TouchableHighlight, View } from 'react-native';
 import styles from '../styles/styles'
 import PropTypes from 'prop-types';
 
 
 const wongBakerScale = {  0:'No issue',
-                            1:'Just a litte',
+                            1:'Just a little',
                             2:'A little more',
                             3:'Even more',
                             4:'A whole lot',
