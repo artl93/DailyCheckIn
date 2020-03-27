@@ -1,7 +1,7 @@
-const insert_api = 'https://dciberjs.azurewebsites.net/api/insert?code=66vOqKaAhEdsocLSMzrhsxCEGn3nxB7YQgrw3kUSxbdxcx47MnaDBw=='
+// const insert_api = 'https://dciberjs.azurewebsites.net/api/insert?code=66vOqKaAhEdsocLSMzrhsxCEGn3nxB7YQgrw3kUSxbdxcx47MnaDBw=='
 
 // local
-// const insert_api = 'http://localhost:7071/api/insert/'
+const insert_api = 'http://localhost:7071/api/insert/'
 
 const headers = {
   'Accept': 'application/json'
