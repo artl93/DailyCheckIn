@@ -41,7 +41,7 @@ namespace dcidb
 
             // to add
             feeling = feeling ?? data?.feeling;
-            shortnessOfBreath = shortnessOfBreath?.shortnessOfBreath;
+            shortnessOfBreath = shortnessOfBreath ?? data?.shortnessOfBreath;
 
             string responseMessage = "";
             
