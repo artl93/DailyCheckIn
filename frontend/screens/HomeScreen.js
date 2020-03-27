@@ -19,23 +19,24 @@ const Countries =
 
 
 
-const likertScale = { 1:'Help!',
-                      2:'Unwell',
-                      3:'OK',
-                      4:'Good',
-                      5:'Great'}
+const wongBakerScale = {  0:'No issue',
+                          1:'Just a litte',
+                          2:'A little more',
+                          3:'Even more',
+                          4:'A whole lot',
+                          5:'Worst'}
 
-const downScale = [5,4,3,2,1]
+const downScale = [0,1,2,3,4,5]
 
 class HomeScreen extends React.Component {
 
   state = {
-    feeling:3,
+    feeling:0,
     fever:false,
-    shortnessOfBreath: false,
-    cough: false,
-    tiredness: false,
-    soreThroat: false,
+    shortnessOfBreath: 0,
+    cough: 0,
+    tiredness: 0,
+    soreThroat: 0,
     contact: false,
     countryVisited: Countries[0],
     spinner:false,
@@ -45,12 +46,12 @@ class HomeScreen extends React.Component {
 
   clearAllVAlues(){
     this.setState({
-      feeling:3,
+      feeling:0,
       fever:false,
-      shortnessOfBreath: false,
-      cough: false,
-      tiredness: false,
-      soreThroat: false,
+      shortnessOfBreath: 0,
+      cough: 0,
+      tiredness: 0,
+      soreThroat: 0,
       contact: false,
       countryVisited: Countries[0] 
     })
@@ -118,37 +119,55 @@ class HomeScreen extends React.Component {
 
             {/* Overall Feeling */}
 
-            <Text style={styles.questionText}>Overall, how do you feel today?</Text>
-            <View style={styles.likertContainer}>
+            <Text style={styles.questionText}>Overall, how poorly do you feel today?</Text>
+            <View style={styles.ratingContainer}>
               { downScale.map( (key) =>
-                  <TouchableHighlight key={key} style={[styles.button,styles.likertButton, this.isEqual(this.state.feeling,key) && styles.selected ]}
+                  <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.state.feeling,key) && styles.selected ]}
                     onPress={ () => this.setState({feeling: key})}>
-                    <Text style={[styles.likertButtonText,this.isEqual(this.state.feeling,key) && styles.selectedButton ]}>{likertScale[key]}</Text>
+                    <Text style={[styles.ratingButtonText,this.isEqual(this.state.feeling,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
                   </TouchableHighlight>
               )}
             </View>
 
             {/* Symptoms */}
 
-            <Text style={styles.questionText}>Do you have any of these symptoms?</Text>
+            <Text style={styles.questionText}>Please rate these symptoms you may be experiencing right now:</Text>
+            
+            <Text style={styles.buttonText}>Sore Throat</Text>
+            <View style={styles.ratingContainer}>
+            { downScale.map( (key) =>
+                <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.state.soreThroat,key) && styles.selected ]}
+                  onPress={ () => this.setState({soreThroat: key})}>
+                  <Text style={[styles.ratingButtonText,this.isEqual(this.state.soreThroat,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
+                </TouchableHighlight>
+            )}
+            </View>
+
+            <Text style={styles.buttonText}>Dry Cough</Text>
+            <View style={styles.ratingContainer}>
+            { downScale.map( (key) =>
+                <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.state.cough,key) && styles.selected ]}
+                  onPress={ () => this.setState({cough: key})}>
+                  <Text style={[styles.ratingButtonText,this.isEqual(this.state.cough,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
+                </TouchableHighlight>
+            )}
+            </View>
+
+            <Text style={styles.buttonText}>Shortness of breath</Text>
+            <View style={styles.ratingContainer}>
+            { downScale.map( (key) =>
+                <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.state.shortnessOfBreath,key) && styles.selected ]}
+                  onPress={ () => this.setState({shortnessOfBreath: key})}>
+                  <Text style={[styles.ratingButtonText,this.isEqual(this.state.shortnessOfBreath,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
+                </TouchableHighlight>
+            )}
+            </View>
+
             <View style={styles.question}>
               <Switch value={this.state.fever} onValueChange={ (value) => this.setState( {fever: value}) }style={{marginRight:5}}></Switch>
               <Text style={styles.buttonText}>Fever</Text>
             </View>
-            <View style={styles.question}>
-              <Switch value={this.state.shortnessOfBreath} onValueChange={ (value) => this.setState( {shortnessOfBreath: value}) }style={{marginRight:5}}></Switch>
-              <Text style={styles.buttonText}>Shortness of breath</Text>
-            </View>
 
-            <View style={styles.question}>
-              <Switch value={this.state.cough} onValueChange={ (value) => this.setState( {cough: value}) }style={{marginRight:5}}></Switch>
-              <Text style={styles.buttonText}>Dry Cough</Text>
-            </View>
-
-            <View style={styles.question}>
-              < Switch value={this.state.soreThroat} onValueChange={ (value) => this.setState( {soreThroat: value}) }style={{marginRight:5}}></Switch>
-              <Text style={styles.buttonText}>Sore Throat</Text>
-            </View>
 
             <Text style={styles.questionText}>Have you been in contact with anyone who tested positive to COVID-19?</Text>
             <View style={styles.question}>
