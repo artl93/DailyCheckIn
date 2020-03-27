@@ -179,6 +179,14 @@ const styles = StyleSheet.create({
       color: '#201F1E',
       alignSelf: 'flex-start'
     },
+
+    ratingText: {
+      fontSize: 18,
+      marginTop:10,
+      marginBottom:10,
+      color: '#201F1E',
+      alignSelf: 'center'
+    },
     
     buttonText: {
       fontSize: 18,
