@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Alert,Picker, Text, TouchableHighlight, View, Switch, Button } from 'react-native';
 import styles from '../styles/styles'
 import Spinner from 'react-native-loading-spinner-overlay'
+import RatedQuestion from '../components/RatedQuestion'
 
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
@@ -119,29 +120,13 @@ class HomeScreen extends React.Component {
 
             {/* Overall Feeling */}
 
-            <Text style={styles.questionText}>Overall, how poorly do you feel today?</Text>
-            <View style={styles.ratingContainer}>
-              { downScale.map( (key) =>
-                  <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.state.feeling,key) && styles.selected ]}
-                    onPress={ () => this.setState({feeling: key})}>
-                    <Text style={[styles.ratingButtonText,this.isEqual(this.state.feeling,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
-                  </TouchableHighlight>
-              )}
-            </View>
 
             {/* Symptoms */}
 
             <Text style={styles.questionText}>Please rate these symptoms you may be experiencing right now:</Text>
             
-            <Text style={styles.buttonText}>Sore Throat</Text>
-            <View style={styles.ratingContainer}>
-            { downScale.map( (key) =>
-                <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.state.soreThroat,key) && styles.selected ]}
-                  onPress={ () => this.setState({soreThroat: key})}>
-                  <Text style={[styles.ratingButtonText,this.isEqual(this.state.soreThroat,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
-                </TouchableHighlight>
-            )}
-            </View>
+            <RatedQuestion questionText='Overall' value={this.state.feeling}/>
+            <RatedQuestion questionText='Sore Throat' value={this.state.soreThroat}/>
 
             <Text style={styles.buttonText}>Dry Cough</Text>
             <View style={styles.ratingContainer}>
