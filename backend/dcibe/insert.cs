@@ -29,11 +29,19 @@ namespace dcidb
             string cough = req.Query["cough"];
             string fever = req.Query["fever"];
 
+            // to add
+            string feeling = req.Query["feeling"];
+            string shortnessOfBreath = req.Query["shortnessOfBreath"];
+
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             email = email ?? data?.email;
             fever = fever ?? data?.fever;
             cough = cough ?? data?.cough;
+
+            // to add
+            feeling = feeling ?? data?.feeling;
+            shortnessOfBreath = shortnessOfBreath ?? data?.shortnessOfBreath;
 
             string responseMessage = "";
             
@@ -49,7 +57,8 @@ namespace dcidb
                 if (string.IsNullOrEmpty(cough))
                     cough = "0";
 
-                int writeResult = WriteToDB(email,fever,cough);
+                // to change
+                int writeResult = WriteToDB(email,fever,cough,feeling,shortnessOfBreath);
                 
                 if (writeResult >= 0) {
                     responseMessage = "{\"result\":\"wrote " + writeResult + " record(s) to db\"}";
@@ -65,7 +74,9 @@ namespace dcidb
         }
 
 
-        public static int WriteToDB( string email, string fever, string cough ) {
+        // to chantge
+        public static int WriteToDB( string email, string fever, string cough,
+                                     string feeling, string shortnessOfBreath ) {
             
             string cnnString  = Environment.GetEnvironmentVariable("DB_CONNECTION");
 
@@ -73,13 +84,21 @@ namespace dcidb
             
             using(SqlConnection connection = new SqlConnection(cnnString))
             {
-                String query = "insert into user_measures (email,ci_time,fever, cough) values (@email, CURRENT_TIMESTAMP, @fever, @cough )";
+                // to add
+                String query = "insert into user_measures " + 
+                                "(email, ci_time, fever, cough, feeling, shortness_of_breath) " +
+                                "values (@email, CURRENT_TIMESTAMP, @fever, @cough, @feeling, @shortnessOfBreath )";
 
                 using(SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@email", email);
                     command.Parameters.AddWithValue("@fever", fever);
                     command.Parameters.AddWithValue("@cough", cough);
+
+                    // toAdd
+                    command.Parameters.AddWithValue("@feeling", feeling);
+                    command.Parameters.AddWithValue("@shortnessOfBreath", shortnessOfBreath);
+
 
                     connection.Open();
                     int result = command.ExecuteNonQuery();
