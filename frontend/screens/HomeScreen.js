@@ -4,7 +4,7 @@ import styles from '../styles/styles'
 import Spinner from 'react-native-loading-spinner-overlay'
 import RatedQuestion from '../components/RatedQuestion'
 
-import { ScrollView } from 'react-native-gesture-handler'
+import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import * as WebBrowser from 'expo-web-browser'
 
 import {insert} from '../apis/dcidb'
@@ -15,7 +15,7 @@ class HomeScreen extends React.Component {
     // user state (TODO - pull this into its own model)
     feelingRating:0,
     feverChillsRating:0,
-    temperature:98.6,
+    temperature:'98.6',
     coughRating:0,
     soreThroatRating:0,
     fatigueRating:0,
@@ -33,7 +33,7 @@ class HomeScreen extends React.Component {
     this.setState({
       feelingRating:0,
       feverChillsRating:0,
-      temperature:98.6,
+      temperature:'98.6',
       coughRating:0,
       soreThroatRating:0,
       fatigueRating:0,
@@ -78,8 +78,8 @@ class HomeScreen extends React.Component {
               alertButton = 'Cancel'
             } else  {
               console.log('result', data) 
-              alertMsg = 'Updated'
-              alertTitle = 'Gotcha'
+              alertMsg = 'Thank you for submitting today.'
+              alertTitle = 'Reporting Service'
               alertButton = 'Ok' 
             }
             
@@ -104,13 +104,8 @@ class HomeScreen extends React.Component {
 
   }
 
-  setSoreThroat (newValue) {
-    this.setState({ soreThroat: newValue})
-  }
-
-  setSymptom( symptomName, symptomValue) {
-    this.setState( {symptom: {... 
-                              symptomName = symptomValue }})
+  handleTemperature = (text) => {
+    this.setState({temperature: text})
   }
 
   render = function() {
@@ -134,6 +129,11 @@ class HomeScreen extends React.Component {
 
             <RatedQuestion questionText='How are you feeling overall?' value={this.state.feelingRating}
                            parentSetState={ (keySelected) => this.setState({feelingRating:keySelected})}/>
+            <TextInput style={styles.TextInput}
+                        keyboardType='numeric'
+                        value={this.state.temperature}
+                        placeholder={this.state.temperature}
+                        onChangeText={this.handleTemperature}/>
             <RatedQuestion questionText='Fever / chills' value={this.state.feverChillsRating}
                            parentSetState={ (keySelected) => this.setState({feverChillsRating:keySelected})}/>
             <RatedQuestion questionText='Dry Cough' value={this.state.coughRating}
@@ -150,11 +150,11 @@ class HomeScreen extends React.Component {
                            parentSetState={ (keySelected) => this.setState({diarrheaRating:keySelected})}/>
 
             <View style={styles.buttonGroup}>
-              <TouchableHighlight style={[styles.button,styles.selected,styles.sideBySideL]} onPress={this.submit} >
-                <Text style={[styles.buttonText,styles.selectedButton]}>Submit</Text>
-              </TouchableHighlight>
-              <TouchableHighlight style={[styles.button,styles.sideBySideR]} onPress={() => this.clearAllVAlues() } >
+              <TouchableHighlight style={[styles.button,styles.sideBySideL]} onPress={() => this.clearAllVAlues() } >
                 <Text style={styles.buttonText}>Clear</Text>
+              </TouchableHighlight>
+              <TouchableHighlight style={[styles.button,styles.selected,styles.sideBySideR]} onPress={this.submit} >
+                <Text style={[styles.buttonText,styles.selectedButton]}>Submit</Text>
               </TouchableHighlight>
             </View>
 
