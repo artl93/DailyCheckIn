@@ -12,32 +12,32 @@ export const insert = (userData) => {
     let params = ''
 
 
-    if (userData.feelingRating != null)
-      params += `&feelingRating=${userdata.feelingRating}`
+    if (userData.feelingRating !== null)
+      params += `&feelingRating=${userData.feelingRating}`
 
-    if (userData.feverChillsRating != null)
-      params += `&feverChillsRating=${userdata.feverChillsRating}`
+    if (userData.feverChillsRating !== null)
+      params += `&feverChillsRating=${userData.feverChillsRating}`
 
-    if (userData.temperature != null)
-      params += `&temperature=${userdata.temperature}`
+    if (userData.temperature !== null)
+      params += `&temperature=${userData.temperature}`
 
-    if (userData.coughRating != null)
-      params += `&coughRating=${userdata.coughRating}`
+    if (userData.coughRating !== null)
+      params += `&coughRating=${userData.coughRating}`
 
-    if (userData.soreThroatRating != null)
-      params += `&soreThroatRating=${userdata.soreThroatRating}`
+    if (userData.soreThroatRating !== null)
+      params += `&soreThroatRating=${userData.soreThroatRating}`
 
-    if (userData.fatigueRating != null)
-      params += `&fatigueRating=${userdata.fatigueRating}`
+    if (userData.fatigueRating !== null)
+      params += `&fatigueRating=${userData.fatigueRating}`
 
-    if (userData.nauseaRating != null)
-      params += `&nauseaRating=${userdata.nauseaRating}`
+    if (userData.nauseaRating !== null)
+      params += `&nauseaRating=${userData.nauseaRating}`
 
-    if (userData.abdominalPainRating != null)
-      params += `&abdominalPainRating=${userdata.abdominalPainRatin}`
+    if (userData.abdominalPainRating !== null)
+      params += `&abdominalPainRating=${userData.abdominalPainRatin}`
 
-    if (userData.diarrheaRating != null)
-      params += `&diarrheaRating=${userdata.diarrheaRating}`
+    if (userData.diarrheaRating !== null)
+      params += `&diarrheaRating=${userData.diarrheaRating}`
 
 
     return fetch(`${insert_api}${params}`, 
