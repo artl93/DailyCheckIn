@@ -1,8 +1,5 @@
 using System;
 using System.IO;
-using System.Net;
-using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,28 +9,43 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-
-
-namespace dcidb
+namespace dcibe
 {
     public static class insert
     {
+        // Azure function triggered when user submits his/her data via DCI Mobile App
         [FunctionName("insert")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation("insert function processed a request.");
 
+            // Reading user data from query parameters
             string email = req.Query["email"];
             string cough = req.Query["cough"];
             string fever = req.Query["fever"];
+            string feeling = req.Query["feeling"];
+            string shortnessOfBreath = req.Query["shortnessOfBreath"];
+            string tiredness = req.Query["tiredness"];
+            string soreThroat= req.Query["soreThroat"];
+            string contact = req.Query["contact"];
+            string countryVisited = req.Query["countryVisited"];
 
+            // Reading request body
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            email = email ?? data?.email;
-            fever = fever ?? data?.fever;
-            cough = cough ?? data?.cough;
+
+            UserData userData = new UserData();
+            userData.Email = email ?? data?.email;
+            userData.Fever = fever ?? data?.fever;
+            userData.Cough = cough ?? data?.cough;
+            userData.Feeling = feeling ?? data?.feeling;
+            userData.ShortnessOfBreath = shortnessOfBreath ?? data?.shortnessOfBreath;
+            userData.Tiredness = tiredness ?? data?.tiredness;
+            userData.SoreThroat = soreThroat ?? data?.soreThroat;
+            userData.Contact = contact ?? data?.contact;
+            userData.CountryVisited = countryVisited ?? data?.countryVisited;
 
             string responseMessage = "";
             
@@ -49,7 +61,8 @@ namespace dcidb
                 if (string.IsNullOrEmpty(cough))
                     cough = "0";
 
-                int writeResult = WriteToDB(email,fever,cough);
+                // Input user data to SQL DB
+                int writeResult = insert.WriteToDB(userData);
                 
                 if (writeResult >= 0) {
                     responseMessage = "{\"result\":\"wrote " + writeResult + " record(s) to db\"}";
@@ -65,7 +78,8 @@ namespace dcidb
         }
 
 
-        public static int WriteToDB( string email, string fever, string cough ) {
+        // Utility method to write user data to SQL Database
+        private static int WriteToDB( UserData userData) {
             
             string cnnString  = Environment.GetEnvironmentVariable("DB_CONNECTION");
 
@@ -73,13 +87,22 @@ namespace dcidb
             
             using(SqlConnection connection = new SqlConnection(cnnString))
             {
-                String query = "insert into user_measures (email,ci_time,fever, cough) values (@email, CURRENT_TIMESTAMP, @fever, @cough )";
+                // to add
+                String query = "insert into user_measures " + 
+                                "(email, ci_time, fever, cough, feeling, shortness_of_breath, tiredness, sore_throat, contact, country_visited) " +
+                                "values (@email, CURRENT_TIMESTAMP, @fever, @cough, @feeling, @shortnessOfBreath, @tiredness, @soreThroat, @contact, @countryVisited)";
 
                 using(SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@email", email);
-                    command.Parameters.AddWithValue("@fever", fever);
-                    command.Parameters.AddWithValue("@cough", cough);
+                    command.Parameters.AddWithValue("@email", userData.Email);
+                    command.Parameters.AddWithValue("@cough", userData.Cough);
+                    command.Parameters.AddWithValue("@fever", userData.Fever);
+                    command.Parameters.AddWithValue("@feeling", userData.Feeling);
+                    command.Parameters.AddWithValue("@shortnessOfBreath", userData.ShortnessOfBreath);
+                    command.Parameters.AddWithValue("@tiredness",userData.Tiredness);
+                    command.Parameters.AddWithValue("@soreThroat",userData.SoreThroat);
+                    command.Parameters.AddWithValue("@contact",userData.Contact);
+                    command.Parameters.AddWithValue("@countryVisited",userData.CountryVisited);
 
                     connection.Open();
                     int result = command.ExecuteNonQuery();

@@ -1,14 +1,13 @@
-import * as React from 'react';
-import { Alert,Picker, Text, TouchableHighlight, View, Switch, Button } from 'react-native';
+import * as React from 'react'
+import { Alert,Picker, Text, TouchableHighlight, View, Switch } from 'react-native'
 import styles from '../styles/styles'
 import Spinner from 'react-native-loading-spinner-overlay'
 import RatedQuestion from '../components/RatedQuestion'
 
-import { ScrollView } from 'react-native-gesture-handler';
-import * as WebBrowser from 'expo-web-browser';
+import { ScrollView } from 'react-native-gesture-handler'
+import * as WebBrowser from 'expo-web-browser'
 
 import {insert} from '../apis/dcidb'
-
 
 const Countries = 
 [ '- none -',
@@ -21,7 +20,7 @@ const Countries =
 
 
 const wongBakerScale = {  0:'No issue',
-                          1:'Just a litte',
+                          1:'Just a little',
                           2:'A little more',
                           3:'Even more',
                           4:'A whole lot',
@@ -81,24 +80,37 @@ class HomeScreen extends React.Component {
         countryVisited:this.state.countryVisited
       }
 
-    this
-
     insert( userData ).then( (data) => {
          try {
 
-            Alert.alert( 'Success!', 
-            data.result,
+            let alertMsg, alertTitle, alertButton
+
+            if (typeof data.error !== 'undefined') {
+              alertMsg = data.error
+              alertTitle = 'Error'
+              alertButton = 'Cancel'
+            } else  {
+              console.log('result', data) 
+              alertMsg = 'Updated'
+              alertTitle = 'Gotcha'
+              alertButton = 'Ok' 
+            }
+            
+            Alert.alert( alertTitle, 
+            alertMsg,
             [
-                    {text: 'Ok', onPress: () => this.setState(({spinner:false}))},
+              {text: alertButton, onPress: () => this.setState(({spinner:false}))},
             ])
 
-            // this.setState( {spinner:false})
          } catch (exception) {
-          Alert.alert( 'Error!', 
-          exception,
-          [
-                  {text: 'Cancel', onPress: () => this.setState(({spinner:false}))},
-          ])        
+
+            const error = (typeof exception !== 'undefined') ? exception.message : "Network error"
+
+            Alert.alert( 'Error!', 
+            error,
+            [
+              {text: 'Cancel', onPress: () => this.setState(({spinner:false}))},
+            ])        
          }
       })
     
@@ -136,7 +148,7 @@ class HomeScreen extends React.Component {
             {/* Symptoms */}
 
             <Text style={styles.questionText}>Please rate these symptoms you may be experiencing right now:</Text>
-            
+
             <RatedQuestion questionText='Overall' value={this.state.feeling}
                            parentSetState={ (keySelected) => this.setState({feeling:keySelected})}/>
             <RatedQuestion questionText='Sore Throat' value={this.state.soreThroat}
@@ -145,6 +157,7 @@ class HomeScreen extends React.Component {
                            parentSetState={ (keySelected) => this.setState({cough:keySelected})}/>
             <RatedQuestion questionText='Shortness of breath' value={this.state.shortnessOfBreath}
                            parentSetState={ (keySelected) => this.setState({shortnessOfBreath:keySelected})}/>
+
 
 
             <View style={styles.question}>
@@ -195,8 +208,8 @@ class HomeScreen extends React.Component {
 
 HomeScreen.navigationOptions = {
   header: null,
-};
+}
 
 
 
-export default HomeScreen;
+export default HomeScreen

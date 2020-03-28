@@ -47,6 +47,8 @@ export const insert = (userData) => {
       return JSON.parse(data)
     })
     .catch(error => { 
-      console.log('update failed', error) 
+      const emsg = typeof error !== 'undefined' ? error.message : 'undefined error'
+      console.log('update failed', emsg) 
+      return {error: emsg}
     });
 }
