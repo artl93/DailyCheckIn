@@ -42,7 +42,7 @@ class RatedQuestion extends React.Component  {
       return(
 
         <View>
-            <Text style={styles.questionText}>
+            <Text style={styles.buttonText}>
               {this.props.questionText}
             </Text>
             <View style={styles.ratingContainer}>
@@ -50,8 +50,7 @@ class RatedQuestion extends React.Component  {
                 <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.props.value,key) && styles.selected ]}
                   onPress={ () => {
                     // this.props.value = key
-                    // this.props.parentSetState({that.props.value:that.key)
-                    alert('pressed ' + key)
+                    this.props.parentSetState(key)
                   }}>
                   <Text style={[styles.ratingButtonText,this.isEqual(this.props.value,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
                 </TouchableHighlight>
