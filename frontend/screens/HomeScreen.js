@@ -3,6 +3,7 @@ import { Alert,Picker, Text, TouchableHighlight, View, Switch } from 'react-nati
 import styles from '../styles/styles'
 import Spinner from 'react-native-loading-spinner-overlay'
 import RatedQuestion from '../components/RatedQuestion'
+import NumericInput from 'react-native-numeric-input'
 
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import * as WebBrowser from 'expo-web-browser'
@@ -15,7 +16,7 @@ class HomeScreen extends React.Component {
     // user state (TODO - pull this into its own model)
     feelingRating:0,
     feverChillsRating:0,
-    temperature:'98.6',
+    temperature:98.6,
     coughRating:0,
     soreThroatRating:0,
     fatigueRating:0,
@@ -26,14 +27,15 @@ class HomeScreen extends React.Component {
    // form UI state
     spinner:false,
     spinnerText:'Saving...',
-    alertIsO: false
+    alertIsO: false,
+    temperatureIsVisible: false
   }
 
   clearAllVAlues(){
     this.setState({
       feelingRating:0,
       feverChillsRating:0,
-      temperature:'98.6',
+      temperature:98.6,
       coughRating:0,
       soreThroatRating:0,
       fatigueRating:0,
@@ -100,12 +102,20 @@ class HomeScreen extends React.Component {
             ])        
          }
       })
-    
 
   }
 
-  handleTemperature = (text) => {
-    this.setState({temperature: text})
+  handleTemperature = (value) => {
+    this.setState({temperature: value})
+  }
+
+  setFeverChillsRating = (value) => {
+    this.setState({feverChillsRating:value})
+    if (value !== 0)
+      this.state.temperatureIsVisible = true
+   else
+     this.state.temperatureIsVisible = false
+     this.state.temperature = 98.6
   }
 
   render = function() {
@@ -129,13 +139,24 @@ class HomeScreen extends React.Component {
 
             <RatedQuestion questionText='How are you feeling overall?' value={this.state.feelingRating}
                            parentSetState={ (keySelected) => this.setState({feelingRating:keySelected})}/>
-            <TextInput style={styles.TextInput}
-                        keyboardType='numeric'
-                        value={this.state.temperature}
-                        placeholder={this.state.temperature}
-                        onChangeText={this.handleTemperature}/>
+            
             <RatedQuestion questionText='Fever / chills' value={this.state.feverChillsRating}
-                           parentSetState={ (keySelected) => this.setState({feverChillsRating:keySelected})}/>
+                           parentSetState={ (keySelected) => this.setFeverChillsRating(keySelected)}/>
+
+            {this.state.temperatureIsVisible ? (
+              <View style={styles.container} visible={this.state.temperatureIsVisible}>
+                  <Text style={styles.ratingText}>Temperature (°F)</Text>
+                  <NumericInput
+                              value={this.state.temperature}
+                              placeholder={this.state.temperature}
+                              step={0.1}
+                              valueType='real'
+                              onChange={value => this.handleTemperature(value)}/>
+              </View>
+            ) : null }
+
+
+
             <RatedQuestion questionText='Dry Cough' value={this.state.coughRating}
                            parentSetState={ (keySelected) => this.setState({coughRating:keySelected})}/>
             <RatedQuestion questionText='Sore throat' value={this.state.soreThroatRating}
