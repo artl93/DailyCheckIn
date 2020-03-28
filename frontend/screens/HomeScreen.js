@@ -138,29 +138,14 @@ class HomeScreen extends React.Component {
             <Text style={styles.questionText}>Please rate these symptoms you may be experiencing right now:</Text>
             
             <RatedQuestion questionText='Overall' value={this.state.feeling}
-                           parentSetState="this.setState"/>
+                           parentSetState={ (keySelected) => this.setState({feeling:keySelected})}/>
             <RatedQuestion questionText='Sore Throat' value={this.state.soreThroat}
-                           parentSetState="this.setState"/>
+                           parentSetState={ (keySelected) => this.setState({soreThroat:keySelected})}/>
+            <RatedQuestion questionText='Dry Coug' value={this.state.cough}
+                           parentSetState={ (keySelected) => this.setState({cough:keySelected})}/>
+            <RatedQuestion questionText='Shortness of breath' value={this.state.shortnessOfBreath}
+                           parentSetState={ (keySelected) => this.setState({shortnessOfBreath:keySelected})}/>
 
-            <Text style={styles.buttonText}>Dry Cough</Text>
-            <View style={styles.ratingContainer}>
-            { downScale.map( (key) =>
-                <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.state.cough,key) && styles.selected ]}
-                  onPress={ () => this.setState({cough: key})}>
-                  <Text style={[styles.ratingButtonText,this.isEqual(this.state.cough,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
-                </TouchableHighlight>
-            )}
-            </View>
-
-            <Text style={styles.buttonText}>Shortness of breath</Text>
-            <View style={styles.ratingContainer}>
-            { downScale.map( (key) =>
-                <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.state.shortnessOfBreath,key) && styles.selected ]}
-                  onPress={ () => this.setState({shortnessOfBreath: key})}>
-                  <Text style={[styles.ratingButtonText,this.isEqual(this.state.shortnessOfBreath,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
-                </TouchableHighlight>
-            )}
-            </View>
 
             <View style={styles.question}>
               <Switch value={this.state.fever} onValueChange={ (value) => this.setState( {fever: value}) }style={{marginRight:5}}></Switch>
