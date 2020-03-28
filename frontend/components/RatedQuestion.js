@@ -16,25 +16,9 @@ const scale = [0,1,2,3,4,5]
 
 class RatedQuestion extends React.Component  {
 
-    // static propTypes = {
-    //   // containerStyle: PropTypes.style,
-    //   // style: PropTypes.style,
-    //   // autoFocus: PropTypes.bool,
-    //   questionText: PropTypes.string,
-    //   value: PropTypes.number,
-    // }
 
-    isEqual(v1,v2) {
-      return v1 === v2
-    }
-
-  renderButtons(thisValue) {
-    return scale.map( ( key) => {
-    <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(thisValue,key) && styles.selected ]}
-            onPress={ () => this.props.parentSetState({thisValue: key})}>
-        <Text style={[styles.ratingButtonText, this.isEqual(thisValue,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
-    </TouchableHighlight>
-    });
+  isEqual(v1,v2) {
+    return v1 === v2
   }
 
   render() {
@@ -42,16 +26,13 @@ class RatedQuestion extends React.Component  {
       return(
 
         <View>
-            <Text style={styles.buttonText}>
+            <Text style={styles.ratingText}>
               {this.props.questionText}
             </Text>
             <View style={styles.ratingContainer}>
             { scale.map( (key) =>
                 <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.props.value,key) && styles.selected ]}
-                  onPress={ () => {
-                    // this.props.value = key
-                    this.props.parentSetState(key)
-                  }}>
+                  onPress={ () => this.props.parentSetState(key) }>
                   <Text style={[styles.ratingButtonText,this.isEqual(this.props.value,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
                 </TouchableHighlight>
             )}
