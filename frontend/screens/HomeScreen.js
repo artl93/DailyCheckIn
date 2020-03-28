@@ -68,6 +68,9 @@ class HomeScreen extends React.Component {
 
     const userData = 
       { email: 'blogs@blogs.com',
+
+        symptoms: {},
+
         fever: this.state.fever,
         cough: this.state.cough,
         feeling:this.state.feeling,
@@ -102,6 +105,15 @@ class HomeScreen extends React.Component {
 
   }
 
+  setSoreThroat (newValue) {
+    this.setState({ soreThroat: newValue})
+  }
+
+  setSymptom( symptomName, symptomValue) {
+    this.setState( {symptom: {... 
+                              symptomName = symptomValue }})
+  }
+
   render = function() {
     return (
       <View style={styles.container}>
@@ -125,8 +137,10 @@ class HomeScreen extends React.Component {
 
             <Text style={styles.questionText}>Please rate these symptoms you may be experiencing right now:</Text>
             
-            <RatedQuestion questionText='Overall' value={this.state.feeling}/>
-            <RatedQuestion questionText='Sore Throat' value={this.state.soreThroat}/>
+            <RatedQuestion questionText='Overall' value={this.state.feeling}
+                           parentSetState="this.setState"/>
+            <RatedQuestion questionText='Sore Throat' value={this.state.soreThroat}
+                           parentSetState="this.setState"/>
 
             <Text style={styles.buttonText}>Dry Cough</Text>
             <View style={styles.ratingContainer}>
