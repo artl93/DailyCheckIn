@@ -25,7 +25,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.resilv.covid19check",
+      "buildNumber": "0.0.1"
+    },
+    "android": {
+      "package": "com.resilv.covid19check",
+      "versionCode": 1
     },
     "description": "What if we knew more about the onset of symptoms? What if we knew whether that tickle in your throat meant something before it became a problem? Minor cases are not directed to the hospital, so we're missing tons of data and assuming spread based on models rather than data. So, we're all at risk."
   }
