@@ -9,51 +9,37 @@ import * as WebBrowser from 'expo-web-browser'
 
 import {insert} from '../apis/dcidb'
 
-const Countries = 
-[ '- none -',
-  'Italy',
-  'China',
-  'South Korea',
-  'Japan',
-  'Other country' ]
-
-
-
-const wongBakerScale = {  0:'No issue',
-                          1:'Just a little',
-                          2:'A little more',
-                          3:'Even more',
-                          4:'A whole lot',
-                          5:'Worst'}
-
-const downScale = [0,1,2,3,4,5]
-
 class HomeScreen extends React.Component {
 
   state = {
-    feeling:0,
-    fever:false,
-    shortnessOfBreath: 0,
-    cough: 0,
-    tiredness: 0,
-    soreThroat: 0,
-    contact: false,
-    countryVisited: Countries[0],
+    // user state (TODO - pull this into its own model)
+    feelingRating:0,
+    feverChillsRating:0,
+    temperature:98.6,
+    coughRating:0,
+    soreThroatRating:0,
+    fatigueRating:0,
+    nauseaRating:0,
+    abdominalPainRatin:0,
+    diarrheaRating:0,
+
+   // form UI state
     spinner:false,
     spinnerText:'Saving...',
-    alertIsOn:false
-  } 
+    alertIsO: false
+  }
 
   clearAllVAlues(){
     this.setState({
-      feeling:0,
-      fever:false,
-      shortnessOfBreath: 0,
-      cough: 0,
-      tiredness: 0,
-      soreThroat: 0,
-      contact: false,
-      countryVisited: Countries[0] 
+      feelingRating:0,
+      feverChillsRating:0,
+      temperature:98.6,
+      coughRating:0,
+      soreThroatRating:0,
+      fatigueRating:0,
+      nauseaRating:0,
+      abdominalPainRatin:0,
+      diarrheaRating:0,
     })
   }
 
@@ -66,18 +52,19 @@ class HomeScreen extends React.Component {
     this.setState( {spinner:true})
 
     const userData = 
-      { email: 'blogs@blogs.com',
+      { 
+        // TODO: convert to make this non-static
+        email: 'blogs@blogs.com',
 
-        symptoms: {},
-
-        fever: this.state.fever,
-        cough: this.state.cough,
-        feeling:this.state.feeling,
-        shortnessOfBreath: this.state.shortnessOfBreath,
-        tiredness: this.state.tiredness,
-        contact:this.state.contact,
-        soreThroat:this.state.soreThroat,
-        countryVisited:this.state.countryVisited
+        feelingRating: this.state.feelingRating,
+        feverChillsRating: this.state.feverChillsRating,
+        temperature: this.state.temperature,
+        coughRating: this.state.coughRating,
+        soreThroatRating: this.state.soreThroatRating,
+        fatigueRating: this.state.fatigueRating,
+        nauseaRating: this.state.nauseaRating,
+        abdominalPainRatin: this.state.abdominalPainRatin,
+        diarrheaRating: this.state.diarrheaRating,
       }
 
     insert( userData ).then( (data) => {
@@ -136,10 +123,6 @@ class HomeScreen extends React.Component {
         />
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-          <View style={styles.welcomeContainer}>
-            <Text>{new Date().toUTCString()}</Text>
-          </View>
-
           <View style={styles.form}>
 
             {/* Overall Feeling */}
@@ -147,46 +130,26 @@ class HomeScreen extends React.Component {
 
             {/* Symptoms */}
 
-            <Text style={styles.questionText}>Please rate these symptoms you may be experiencing right now:</Text>
+            <Text style={styles.questionText}>Please tell us about your experience in the last hour:</Text>
 
-            <RatedQuestion questionText='Overall' value={this.state.feeling}
-                           parentSetState={ (keySelected) => this.setState({feeling:keySelected})}/>
-            <RatedQuestion questionText='Sore Throat' value={this.state.soreThroat}
-                           parentSetState={ (keySelected) => this.setState({soreThroat:keySelected})}/>
-            <RatedQuestion questionText='Dry Coug' value={this.state.cough}
-                           parentSetState={ (keySelected) => this.setState({cough:keySelected})}/>
-            <RatedQuestion questionText='Shortness of breath' value={this.state.shortnessOfBreath}
-                           parentSetState={ (keySelected) => this.setState({shortnessOfBreath:keySelected})}/>
+            <RatedQuestion questionText='How are you feeling overall?' value={this.state.feelingRating}
+                           parentSetState={ (keySelected) => this.setState({feelingRating:keySelected})}/>
+            <RatedQuestion questionText='Fever / chills' value={this.state.feverChillsRating}
+                           parentSetState={ (keySelected) => this.setState({feverChillsRating:keySelected})}/>
+            <RatedQuestion questionText='Dry Cough' value={this.state.coughRating}
+                           parentSetState={ (keySelected) => this.setState({coughRating:keySelected})}/>
+            <RatedQuestion questionText='Sore throat' value={this.state.soreThroatRating}
+                           parentSetState={ (keySelected) => this.setState({soreThroatRating:keySelected})}/>
+            <RatedQuestion questionText='Fatigue' value={this.state.fatigueRating}
+                           parentSetState={ (keySelected) => this.setState({fatigueRating:keySelected})}/>
+            <RatedQuestion questionText='Nausea / vomiting' value={this.state.nauseaRating}
+                           parentSetState={ (keySelected) => this.setState({nauseaRating:keySelected})}/>
+            <RatedQuestion questionText='Abdominal pain' value={this.state.abdominalPainRatin}
+                           parentSetState={ (keySelected) => this.setState({abdominalPainRatin:keySelected})}/>
+            <RatedQuestion questionText='Diarrhea' value={this.state.diarrheaRating}
+                           parentSetState={ (keySelected) => this.setState({diarrheaRating:keySelected})}/>
 
-
-
-            <View style={styles.question}>
-              <Switch value={this.state.fever} onValueChange={ (value) => this.setState( {fever: value}) }style={{marginRight:5}}></Switch>
-              <Text style={styles.buttonText}>Fever</Text>
-            </View>
-
-
-            <Text style={styles.questionText}>Have you been in contact with anyone who tested positive to COVID-19?</Text>
-            <View style={styles.question}>
-              <Switch value={this.state.contact} onValueChange={ (value) => this.setState( {contact: value}) }style={{marginRight:5}}></Switch>
-              <Text style={styles.buttonText}></Text>
-            </View>
-
-            <Text style={styles.questionText}>Have you visited any of the countries below within the last 14 days?</Text>
-             
-              <Picker
-                selectedValue={this.state.countryVisited}
-                style={{ marginTop:-20, width: '100%'}}
-                onValueChange={(value) =>
-                  this.setState({countryVisited: value})
-                }>
-                {Countries.map ( (value) => 
-                    <Picker.Item key={value} label={value} value={value} />
-                  )
-                }
-              </Picker>
-
-              <View style={styles.buttonGroup}>
+            <View style={styles.buttonGroup}>
               <TouchableHighlight style={[styles.button,styles.selected,styles.sideBySideL]} onPress={this.submit} >
                 <Text style={[styles.buttonText,styles.selectedButton]}>Submit</Text>
               </TouchableHighlight>
