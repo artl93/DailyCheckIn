@@ -20,7 +20,7 @@ class HomeScreen extends React.Component {
     soreThroatRating:0,
     fatigueRating:0,
     nauseaRating:0,
-    abdominalPainRatin:0,
+    abdominalPainRating:0,
     diarrheaRating:0,
 
    // form UI state
@@ -38,7 +38,7 @@ class HomeScreen extends React.Component {
       soreThroatRating:0,
       fatigueRating:0,
       nauseaRating:0,
-      abdominalPainRatin:0,
+      abdominalPainRating:0,
       diarrheaRating:0,
     })
   }
@@ -63,7 +63,7 @@ class HomeScreen extends React.Component {
         soreThroatRating: this.state.soreThroatRating,
         fatigueRating: this.state.fatigueRating,
         nauseaRating: this.state.nauseaRating,
-        abdominalPainRatin: this.state.abdominalPainRatin,
+        abdominalPainRating: this.state.abdominalPainRating,
         diarrheaRating: this.state.diarrheaRating,
       }
 
@@ -144,8 +144,8 @@ class HomeScreen extends React.Component {
                            parentSetState={ (keySelected) => this.setState({fatigueRating:keySelected})}/>
             <RatedQuestion questionText='Nausea / vomiting' value={this.state.nauseaRating}
                            parentSetState={ (keySelected) => this.setState({nauseaRating:keySelected})}/>
-            <RatedQuestion questionText='Abdominal pain' value={this.state.abdominalPainRatin}
-                           parentSetState={ (keySelected) => this.setState({abdominalPainRatin:keySelected})}/>
+            <RatedQuestion questionText='Abdominal pain' value={this.state.abdominalPainRating}
+                           parentSetState={ (keySelected) => this.setState({abdominalPainRating:keySelected})}/>
             <RatedQuestion questionText='Diarrhea' value={this.state.diarrheaRating}
                            parentSetState={ (keySelected) => this.setState({diarrheaRating:keySelected})}/>
 
