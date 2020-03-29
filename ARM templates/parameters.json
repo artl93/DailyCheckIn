@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_covidfnapp_name": {
+            "value": null
+        },
+        "sites_coronafnapp_name": {
+            "value": null
+        },
+        "components_covidfnapp_name": {
+            "value": null
+        },
+        "components_coronafnapp_name": {
+            "value": null
+        },
+        "serverfarms_ASP_CovidProto_b664_name": {
+            "value": null
+        },
+        "serverfarms_ASP_CovidProto_ba78_name": {
+            "value": null
+        },
+        "databaseAccounts_covidhack_name": {
+            "value": null
+        },
+        "storageAccounts_storageaccountcovid8629_name": {
+            "value": null
+        },
+        "storageAccounts_storageaccountcovidbf7b_name": {
+            "value": null
+        },
+        "actionGroups_Application_Insights_Smart_Detection_name": {
+            "value": null
+        },
+        "smartdetectoralertrules_failure_anomalies___covidfnapp_name": {
+            "value": null
+        },
+        "smartdetectoralertrules_failure_anomalies___coronafnapp_name": {
+            "value": null
+        },
+        "smartdetectoralertrules_failure_anomalies___appinsights_ycdosfhir_name": {
+            "value": null
+        },
+        "components_appinsights_ycdosfhir_externalid": {
+            "value": null
+        }
+    }
+}
