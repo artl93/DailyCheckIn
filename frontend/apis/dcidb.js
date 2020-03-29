@@ -24,6 +24,9 @@ export const insert = (userData) => {
     if (userData.coughRating !== null)
       params += `&coughRating=${userData.coughRating}`
 
+    if (userData.shortnessOfBreathRating !== null)
+      params += `&shortnessOfBreathRating=${userData.shortnessOfBreathRating}`
+
     if (userData.soreThroatRating !== null)
       params += `&soreThroatRating=${userData.soreThroatRating}`
 
