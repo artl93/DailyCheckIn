@@ -18,6 +18,7 @@ class HomeScreen extends React.Component {
     feverChillsRating:0,
     temperature:98.6,
     coughRating:0,
+    shortnessOfBreathRating:0,
     soreThroatRating:0,
     fatigueRating:0,
     nauseaRating:0,
@@ -37,6 +38,7 @@ class HomeScreen extends React.Component {
       feverChillsRating:0,
       temperature:98.6,
       coughRating:0,
+      shortnessOfBreathRating:0,
       soreThroatRating:0,
       fatigueRating:0,
       nauseaRating:0,
@@ -62,6 +64,7 @@ class HomeScreen extends React.Component {
         feverChillsRating: this.state.feverChillsRating,
         temperature: this.state.temperature,
         coughRating: this.state.coughRating,
+        shortnessOfBreathRating: this.state.shortnessOfBreathRating,
         soreThroatRating: this.state.soreThroatRating,
         fatigueRating: this.state.fatigueRating,
         nauseaRating: this.state.nauseaRating,
@@ -159,6 +162,8 @@ class HomeScreen extends React.Component {
 
             <RatedQuestion questionText='Dry Cough' value={this.state.coughRating}
                            parentSetState={ (keySelected) => this.setState({coughRating:keySelected})}/>
+            <RatedQuestion questionText='Shortness of Breath' value={this.state.shortnessOfBreathRating}
+                           parentSetState={ (keySelected) => this.setState({shortnessOfBreathRating:keySelected})}/>
             <RatedQuestion questionText='Sore throat' value={this.state.soreThroatRating}
                            parentSetState={ (keySelected) => this.setState({soreThroatRating:keySelected})}/>
             <RatedQuestion questionText='Fatigue' value={this.state.fatigueRating}
