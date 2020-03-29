@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Image, Platform, Text, TouchableOpacity, TouchableHighlight, View } from 'react-native'
+import { Image, Text, TouchableHighlight, View } from 'react-native'
 import styles from '../styles/styles'
 import Privacy from './Privacy'
 import { ScrollView } from 'react-native-gesture-handler'
