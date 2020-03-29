@@ -11,32 +11,37 @@ export const insert = (userData) => {
 
     let params = ''
 
-    if (userData.email !== null)
-      params += `&email=${userData.email}` 
 
-    if (userData.fever !== null)
-      params += `&fever=${userData.fever}`
+    if (userData.feelingRating !== null)
+      params += `&feelingRating=${userData.feelingRating}`
 
-    if (userData.cough !== null)
-      params += `&cough=${userData.cough}`     
+    if (userData.feverChillsRating !== null)
+      params += `&feverChillsRating=${userData.feverChillsRating}`
 
-    if (userData.feeling !== null)
-      params += `&feeling=${userData.feeling}` 
+    if (userData.temperature !== null)
+      params += `&temperature=${userData.temperature}`
 
-    if (userData.shortnessOfBreath !== null)
-      params += `&shortnessOfBreath=${userData.shortnessOfBreath}`
+    if (userData.coughRating !== null)
+      params += `&coughRating=${userData.coughRating}`
 
-    if (userData.tiredness !== null)
-      params += `&tiredness=${userData.tiredness}`     
+    if (userData.shortnessOfBreathRating !== null)
+      params += `&shortnessOfBreathRating=${userData.shortnessOfBreathRating}`
 
-    if (userData.soreThroat !== null)
-      params += `&soreThroat=${userData.soreThroat}`  
+    if (userData.soreThroatRating !== null)
+      params += `&soreThroatRating=${userData.soreThroatRating}`
 
-    if (userData.contact !== null)
-      params += `&contact=${userData.contact}` 
+    if (userData.fatigueRating !== null)
+      params += `&fatigueRating=${userData.fatigueRating}`
 
-    if (userData.countryVisited !== null)
-      params += `&countryVisited=${userData.countryVisited}`    
+    if (userData.nauseaRating !== null)
+      params += `&nauseaRating=${userData.nauseaRating}`
+
+    if (userData.abdominalPainRating !== null)
+      params += `&abdominalPainRating=${userData.abdominalPainRatin}`
+
+    if (userData.diarrheaRating !== null)
+      params += `&diarrheaRating=${userData.diarrheaRating}`
+
 
     return fetch(`${insert_api}${params}`, 
     { headers, method: 'POST' }) 

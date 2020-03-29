@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
       padding:8
     },
     questionText: {
-      fontSize: 18,
+      fontSize: 16,
       marginTop:20,
       marginBottom:10,
       color: '#201F1E',
@@ -181,11 +181,12 @@ const styles = StyleSheet.create({
     },
 
     ratingText: {
-      fontSize: 18,
+      fontSize: 12,
+      fontWeight: 'bold',
       marginTop:10,
       marginBottom:10,
       color: '#201F1E',
-      alignSelf: 'center'
+      alignSelf: 'auto'
     },
     
     buttonText: {

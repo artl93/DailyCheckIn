@@ -3,57 +3,47 @@ import { Alert,Picker, Text, TouchableHighlight, View, Switch } from 'react-nati
 import styles from '../styles/styles'
 import Spinner from 'react-native-loading-spinner-overlay'
 import RatedQuestion from '../components/RatedQuestion'
+import NumericInput from 'react-native-numeric-input'
 
-import { ScrollView } from 'react-native-gesture-handler'
+import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import * as WebBrowser from 'expo-web-browser'
 
 import {insert} from '../apis/dcidb'
 
-const Countries = 
-[ '- none -',
-  'Italy',
-  'China',
-  'South Korea',
-  'Japan',
-  'Other country' ]
-
-
-
-const wongBakerScale = {  0:'No issue',
-                          1:'Just a little',
-                          2:'A little more',
-                          3:'Even more',
-                          4:'A whole lot',
-                          5:'Worst'}
-
-const downScale = [0,1,2,3,4,5]
-
 class HomeScreen extends React.Component {
 
   state = {
-    feeling:0,
-    fever:false,
-    shortnessOfBreath: 0,
-    cough: 0,
-    tiredness: 0,
-    soreThroat: 0,
-    contact: false,
-    countryVisited: Countries[0],
+    // user state (TODO - pull this into its own model)
+    feelingRating:0,
+    feverChillsRating:0,
+    temperature:98.6,
+    coughRating:0,
+    shortnessOfBreathRating:0,
+    soreThroatRating:0,
+    fatigueRating:0,
+    nauseaRating:0,
+    abdominalPainRating:0,
+    diarrheaRating:0,
+
+   // form UI state
     spinner:false,
     spinnerText:'Saving...',
-    alertIsOn:false
-  } 
+    alertIsO: false,
+    temperatureIsVisible: false
+  }
 
   clearAllVAlues(){
     this.setState({
-      feeling:0,
-      fever:false,
-      shortnessOfBreath: 0,
-      cough: 0,
-      tiredness: 0,
-      soreThroat: 0,
-      contact: false,
-      countryVisited: Countries[0] 
+      feelingRating:0,
+      feverChillsRating:0,
+      temperature:98.6,
+      coughRating:0,
+      shortnessOfBreathRating:0,
+      soreThroatRating:0,
+      fatigueRating:0,
+      nauseaRating:0,
+      abdominalPainRating:0,
+      diarrheaRating:0,
     })
   }
 
@@ -66,18 +56,20 @@ class HomeScreen extends React.Component {
     this.setState( {spinner:true})
 
     const userData = 
-      { email: 'blogs@blogs.com',
+      { 
+        // TODO: convert to make this non-static
+        email: 'blogs@blogs.com',
 
-        symptoms: {},
-
-        fever: this.state.fever,
-        cough: this.state.cough,
-        feeling:this.state.feeling,
-        shortnessOfBreath: this.state.shortnessOfBreath,
-        tiredness: this.state.tiredness,
-        contact:this.state.contact,
-        soreThroat:this.state.soreThroat,
-        countryVisited:this.state.countryVisited
+        feelingRating: this.state.feelingRating,
+        feverChillsRating: this.state.feverChillsRating,
+        temperature: this.state.temperature,
+        coughRating: this.state.coughRating,
+        shortnessOfBreathRating: this.state.shortnessOfBreathRating,
+        soreThroatRating: this.state.soreThroatRating,
+        fatigueRating: this.state.fatigueRating,
+        nauseaRating: this.state.nauseaRating,
+        abdominalPainRating: this.state.abdominalPainRating,
+        diarrheaRating: this.state.diarrheaRating,
       }
 
     insert( userData ).then( (data) => {
@@ -91,8 +83,8 @@ class HomeScreen extends React.Component {
               alertButton = 'Cancel'
             } else  {
               console.log('result', data) 
-              alertMsg = 'Updated'
-              alertTitle = 'Gotcha'
+              alertMsg = 'Thank you for submitting today.'
+              alertTitle = 'Reporting Service'
               alertButton = 'Ok' 
             }
             
@@ -113,17 +105,20 @@ class HomeScreen extends React.Component {
             ])        
          }
       })
-    
 
   }
 
-  setSoreThroat (newValue) {
-    this.setState({ soreThroat: newValue})
+  handleTemperature = (value) => {
+    this.setState({temperature: value})
   }
 
-  setSymptom( symptomName, symptomValue) {
-    this.setState( {symptom: {... 
-                              symptomName = symptomValue }})
+  setFeverChillsRating = (value) => {
+    this.setState({feverChillsRating:value})
+    if (value !== 0)
+      this.state.temperatureIsVisible = true
+   else
+     this.state.temperatureIsVisible = false
+     this.state.temperature = 98.6
   }
 
   render = function() {
@@ -136,10 +131,6 @@ class HomeScreen extends React.Component {
         />
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-          <View style={styles.welcomeContainer}>
-            <Text>{new Date().toUTCString()}</Text>
-          </View>
-
           <View style={styles.form}>
 
             {/* Overall Feeling */}
@@ -147,51 +138,49 @@ class HomeScreen extends React.Component {
 
             {/* Symptoms */}
 
-            <Text style={styles.questionText}>Please rate these symptoms you may be experiencing right now:</Text>
+            <Text style={styles.questionText}>Please tell us about your experience in the last hour:</Text>
 
-            <RatedQuestion questionText='Overall' value={this.state.feeling}
-                           parentSetState={ (keySelected) => this.setState({feeling:keySelected})}/>
-            <RatedQuestion questionText='Sore Throat' value={this.state.soreThroat}
-                           parentSetState={ (keySelected) => this.setState({soreThroat:keySelected})}/>
-            <RatedQuestion questionText='Dry Coug' value={this.state.cough}
-                           parentSetState={ (keySelected) => this.setState({cough:keySelected})}/>
-            <RatedQuestion questionText='Shortness of breath' value={this.state.shortnessOfBreath}
-                           parentSetState={ (keySelected) => this.setState({shortnessOfBreath:keySelected})}/>
+            <RatedQuestion questionText='How are you feeling overall?' value={this.state.feelingRating}
+                           parentSetState={ (keySelected) => this.setState({feelingRating:keySelected})}/>
+            
+            <RatedQuestion questionText='Fever / chills' value={this.state.feverChillsRating}
+                           parentSetState={ (keySelected) => this.setFeverChillsRating(keySelected)}/>
+
+            {this.state.temperatureIsVisible ? (
+              <View style={styles.container} visible={this.state.temperatureIsVisible}>
+                  <Text style={styles.ratingText}>Temperature (°F)</Text>
+                  <NumericInput
+                              value={this.state.temperature}
+                              placeholder={this.state.temperature}
+                              step={0.1}
+                              valueType='real'
+                              onChange={value => this.handleTemperature(value)}/>
+              </View>
+            ) : null }
 
 
 
-            <View style={styles.question}>
-              <Switch value={this.state.fever} onValueChange={ (value) => this.setState( {fever: value}) }style={{marginRight:5}}></Switch>
-              <Text style={styles.buttonText}>Fever</Text>
-            </View>
+            <RatedQuestion questionText='Dry Cough' value={this.state.coughRating}
+                           parentSetState={ (keySelected) => this.setState({coughRating:keySelected})}/>
+            <RatedQuestion questionText='Shortness of Breath' value={this.state.shortnessOfBreathRating}
+                           parentSetState={ (keySelected) => this.setState({shortnessOfBreathRating:keySelected})}/>
+            <RatedQuestion questionText='Sore throat' value={this.state.soreThroatRating}
+                           parentSetState={ (keySelected) => this.setState({soreThroatRating:keySelected})}/>
+            <RatedQuestion questionText='Fatigue' value={this.state.fatigueRating}
+                           parentSetState={ (keySelected) => this.setState({fatigueRating:keySelected})}/>
+            <RatedQuestion questionText='Nausea / vomiting' value={this.state.nauseaRating}
+                           parentSetState={ (keySelected) => this.setState({nauseaRating:keySelected})}/>
+            <RatedQuestion questionText='Abdominal pain' value={this.state.abdominalPainRating}
+                           parentSetState={ (keySelected) => this.setState({abdominalPainRating:keySelected})}/>
+            <RatedQuestion questionText='Diarrhea' value={this.state.diarrheaRating}
+                           parentSetState={ (keySelected) => this.setState({diarrheaRating:keySelected})}/>
 
-
-            <Text style={styles.questionText}>Have you been in contact with anyone who tested positive to COVID-19?</Text>
-            <View style={styles.question}>
-              <Switch value={this.state.contact} onValueChange={ (value) => this.setState( {contact: value}) }style={{marginRight:5}}></Switch>
-              <Text style={styles.buttonText}></Text>
-            </View>
-
-            <Text style={styles.questionText}>Have you visited any of the countries below within the last 14 days?</Text>
-             
-              <Picker
-                selectedValue={this.state.countryVisited}
-                style={{ marginTop:-20, width: '100%'}}
-                onValueChange={(value) =>
-                  this.setState({countryVisited: value})
-                }>
-                {Countries.map ( (value) => 
-                    <Picker.Item key={value} label={value} value={value} />
-                  )
-                }
-              </Picker>
-
-              <View style={styles.buttonGroup}>
-              <TouchableHighlight style={[styles.button,styles.selected,styles.sideBySideL]} onPress={this.submit} >
-                <Text style={[styles.buttonText,styles.selectedButton]}>Submit</Text>
-              </TouchableHighlight>
-              <TouchableHighlight style={[styles.button,styles.sideBySideR]} onPress={() => this.clearAllVAlues() } >
+            <View style={styles.buttonGroup}>
+              <TouchableHighlight style={[styles.button,styles.sideBySideL]} onPress={() => this.clearAllVAlues() } >
                 <Text style={styles.buttonText}>Clear</Text>
+              </TouchableHighlight>
+              <TouchableHighlight style={[styles.button,styles.selected,styles.sideBySideR]} onPress={this.submit} >
+                <Text style={[styles.buttonText,styles.selectedButton]}>Submit</Text>
               </TouchableHighlight>
             </View>
 

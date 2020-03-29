@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 
-const wongBakerScale = {  0:'No issue',
-                            1:'Just a little',
-                            2:'A little more',
-                            3:'Even more',
-                            4:'A whole lot',
-                            5:'Worst'}
+const wongBakerScale = {  1:'No issue',
+                            2:'Just a little',
+                            3:'A little more',
+                            4:'Even more',
+                            5:'A whole lot',
+                            6:'Worst'}
 
-const scale = [0,1,2,3,4,5]
+const scale = [1,2,3,4,5,6]
 
 class RatedQuestion extends React.Component  {
 
