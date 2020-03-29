@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import PersonScreen from '../screens/PersonScreen';
 import ChartsScreen from '../screens/ChartsScreen';
 import LinksScreen from '../screens/LinksScreen';
 import Colors from '../constants/Colors';
@@ -32,8 +33,16 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'Your details',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          title: 'Daily Tracking',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-clock" />,
+        }}
+      />
+      <BottomTab.Screen      
+        name="You"
+        component={PersonScreen}
+        options={{
+          title: 'About You',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-person" />,
         }}
       />
       <BottomTab.Screen      
@@ -41,7 +50,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={ChartsScreen}
         options={{
           title: 'Charts',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-stats" />,
         }}
       />
 
@@ -64,7 +73,9 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'Your daily check';
-    case 'Chart':
+    case 'You':
+        return 'Your details';
+    case 'Charts':
       return 'Your charts';
     case 'Links':
       return 'Links';
