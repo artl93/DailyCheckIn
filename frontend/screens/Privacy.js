@@ -14,7 +14,7 @@ class Privacy extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.privacy}>
             <Text style={[styles.privacyText,styles.bold]}>Privacy Policy</Text>
-            <Text style={styles.privacyText}>Your privacy is important to us. It is Brainstorming's policy to respect your privacy regarding any information we may collect from you across our website, and other sites we own and operate.</Text>
+            <Text style={styles.privacyText}>Your privacy is important to us. It is our policy to respect your privacy regarding any information we may collect from you across our website, and other sites we own and operate.</Text>
 
             <Text style={styles.privacyText}>We only ask for personal information when we truly need it to provide a service to you. We collect it by fair and lawful means, with your knowledge and consent. We also let you know why we’re collecting it and how it will be used.</Text>
 
