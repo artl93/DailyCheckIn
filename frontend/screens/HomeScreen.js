@@ -140,7 +140,7 @@ class HomeScreen extends React.Component {
 
             <Text style={styles.questionText}>Please tell us about your experience in the last hour:</Text>
 
-            <RatedQuestion questionText='How are you feeling overall?' value={this.state.feelingRating}
+            <RatedQuestion questionText='How poorly are you feeling overall?' value={this.state.feelingRating}
                            parentSetState={ (keySelected) => this.setState({feelingRating:keySelected})}/>
             
             <RatedQuestion questionText='Fever / chills' value={this.state.feverChillsRating}
