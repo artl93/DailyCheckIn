@@ -15,35 +15,40 @@ export const insert = (userData) => {
       params += `&email=${userData.email}`
 
     if (userData.feelingRating !== null)
-      params += `&feeling=${userData.feelingRating}`
+      params += `&location=${userData.location}`
 
     if (userData.feverChillsRating !== null)
-      params += `&fever=${userData.feverChillsRating}`
+      params += `&ageGroup=${userData.ageGroup}`
 
     if (userData.temperature !== null)
-      params += `&temperature=${userData.temperature}`
+      params += `&diabetes=${userData.diabetes}`
 
     if (userData.coughRating !== null)
-      params += `&cough=${userData.coughRating}`
+      params += `&cancer=${userData.cancer}`
 
     if (userData.shortnessOfBreathRating !== null)
-      params += `&shortnessOfBreath=${userData.shortnessOfBreathRating}`
+      params += `&gender=${userData.gender}`
 
     if (userData.soreThroatRating !== null)
-      params += `&soreThroat=${userData.soreThroatRating}`
+      params += `&pregnancy=${userData.pregnancy}`
 
     if (userData.fatigueRating !== null)
-      params += `&fatigue=${userData.fatigueRating}`
+      params += `&asthma=${userData.asthma}`
 
     if (userData.nauseaRating !== null)
-      params += `&nausea=${userData.nauseaRating}`
+      params += `&heartKidneyOrLiver=${userData.heartKidneyOrLiver}`
 
     if (userData.abdominalPainRating !== null)
-      params += `&abdominalPain=${userData.abdominalPainRatin}`
+      params += `&weakImune=${userData.weakImune}`
 
     if (userData.diarrheaRating !== null)
-      params += `&diarrhea=${userData.diarrheaRating}`
+      params += `&traveled=${userData.traveled}`
 
+    if (userData.diarrheaRating !== null)
+      params += `&contact=${userData.contact}`
+
+    if (userData.diarrheaRating !== null)
+      params += `&fluVaccine=${userData.fluVaccine}`   
 
     return fetch(`${insert_api}${params}`, 
     { headers, method: 'POST' }) 

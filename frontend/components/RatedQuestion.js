@@ -12,7 +12,7 @@ const wongBakerScale = {  1:'No issue',
                             5:'A whole lot',
                             6:'Worst'}
 
-const scale = [1,2,3,4,5,6]
+
 
 class RatedQuestion extends React.Component  {
 
@@ -30,12 +30,12 @@ class RatedQuestion extends React.Component  {
               {this.props.questionText}
             </Text>
             <View style={styles.ratingContainer}>
-            { scale.map( (key) =>
-                <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.props.value,key) && styles.selected ]}
-                  onPress={ () => this.props.parentSetState(key) }>
-                  <Text style={[styles.ratingButtonText,this.isEqual(this.props.value,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
-                </TouchableHighlight>
-            )}
+              { Object.keys(wongBakerScale).map( (key) =>
+                  <TouchableHighlight key={key} style={[styles.button,styles.ratingButton, this.isEqual(this.props.value,key) && styles.selected ]}
+                    onPress={ () => this.props.parentSetState(key) }>
+                    <Text style={[styles.ratingButtonText,this.isEqual(this.props.value,key) && styles.selectedButton ]}>{wongBakerScale[key]}</Text>
+                  </TouchableHighlight>
+              )}
             </View>
         </View>
       )
