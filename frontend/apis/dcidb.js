@@ -1,6 +1,7 @@
-//const insert_api = 'https://dciberjs.azurewebsites.net/api/insert?code=66vOqKaAhEdsocLSMzrhsxCEGn3nxB7YQgrw3kUSxbdxcx47MnaDBw=='
-// local
-const insert_api = 'http://192.168.0.15:7071/api/insert_daily?mykey=123'
+
+const insert_api = 'https://dailyciapi.azurewebsites.net/api/insert_daily?code=azEPStPejVbZDV0DJqns07y1ZSdw4jozip513I7Uw3Pv7f2vxD%2FXJg%3D%3D'
+//
+// const insert_api = 'http://192.168.0.15:7071/api/insert_daily?mykey=123'
 
 
 const headers = {

@@ -1,6 +1,7 @@
-// const insert_api = 'https://covidfnapp.azurewebsites.net/api/upsert_initial_assessment?code=C31oHpTKBFeL94L3Wl759wrUiPb37VXgQvSe7WucFfH4UiZO1XVcEw=='
+const insert_api = 'https://dailyciapi.azurewebsites.net/api/upsert_person?code=WpAa60FYNKnICu7ARAfWD8Xd37URihmO5c3nkI9ia24SHhlDVNCFgQ%3D%3D'
+
 // local
-const insert_api = 'http://192.168.0.15:7071/api/upsert_person?mykey=123'
+// const insert_api = 'http://192.168.0.15:7071/api/upsert_person?mykey=123'
 
 const headers = {
   'Content-Type': 'application/json',
