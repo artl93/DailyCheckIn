@@ -1,6 +1,7 @@
 
 export default {
-    YES_NO : {'Y':'Yes','N':'No',null:'n/a'},
+
+    YES_NO : {'N':'No','Y':'Yes',null:'no answer'},
     GENDER : {'F':'Female','M':'Male','O':'Other'},
 
     AGE_GROUP : ['Younger than 2 years old',
