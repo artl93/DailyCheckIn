@@ -41,6 +41,7 @@ namespace FunctionApp1
             log.LogInformation("upsert_daily_survey function processed a request.");
 
             DailySurveyData dailySurveyData = await upsert_daily_survey.PopulateDailySurveyDataFromHttpRequest(req);
+            dailySurveyData.EntryDate = DateTime.Today.Date.ToString();
             
             string responseMessage = "";
             
@@ -49,11 +50,6 @@ namespace FunctionApp1
                 responseMessage = "{\"result\":\"PatientId parameter is missing in your request\"}";
                 return new OkObjectResult(responseMessage);
             } 
-            else if (string.IsNullOrEmpty(dailySurveyData.EntryDate))
-            {
-                responseMessage = "{\"result\":\"EntryDate parameter missing in your request\"}";
-                return new OkObjectResult(responseMessage);
-            }
             else 
             {
                 // Input user data to Cosmos DB
