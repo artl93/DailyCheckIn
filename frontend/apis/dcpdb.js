@@ -1,7 +1,7 @@
-const insert_api = 'https://dciberjs.azurewebsites.net/api/insert?code=66vOqKaAhEdsocLSMzrhsxCEGn3nxB7YQgrw3kUSxbdxcx47MnaDBw=='
+const insert_api = 'https://covidfnapp.azurewebsites.net/api/upsert_initial_assessment?code=C31oHpTKBFeL94L3Wl759wrUiPb37VXgQvSe7WucFfH4UiZO1XVcEw=='
 
 // local
-// const insert_api = 'http://localhost:7071/api/insert/'
+// const insert_api = 'http://localhost:7071/api/upsert_initial_assessment/'
 
 const headers = {
   'Accept': 'application/json'

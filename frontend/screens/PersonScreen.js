@@ -32,13 +32,22 @@ class PersonScreen extends React.Component {
    // form UI state
     spinner:false,
     spinnerText:'Saving...',
-    alertIsO: false,
-    temperatureIsVisible: false
   }
 
   clearAllVAlues(){
     this.setState({
-
+      location:null,
+      ageGroup:Questions.STARTER_AGE,
+      gender:null,
+      diabetes:null,
+      cancer:null,
+      pregnancy:null,
+      asthma:null,
+      heartKidneyOrLiver:null,
+      weakImune:null,
+      traveled:null,
+      contact:null,
+      fluVaccine:null,
     })
   }
 

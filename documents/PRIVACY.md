@@ -1,5 +1,7 @@
 
-# Privacy Policy
+# Privacy Policy 
+
+## (Placeholder)
 
 
 Your privacy is important to us. It is our policy to respect your privacy regarding any information we may collect from you across our website, and other sites we own and operate.
