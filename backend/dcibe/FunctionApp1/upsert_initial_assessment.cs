@@ -35,8 +35,6 @@ namespace FunctionApp1
             cosmosClient = new CosmosClient(EndpointUrl, PrimaryKey);
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
-
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             FirstAssess data = JsonConvert.DeserializeObject<FirstAssess>(requestBody);
                         
