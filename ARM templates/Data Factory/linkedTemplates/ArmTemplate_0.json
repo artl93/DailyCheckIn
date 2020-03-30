@@ -1,0 +1,405 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "coronadf"
+        },
+        "AzureBlobStorage1_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+        },
+        "CosmosDb1_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'CosmosDb1'"
+        },
+        "CosmosDb2_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'CosmosDb2'"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobStorage",
+                "typeProperties": {
+                    "connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CosmosDb1')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "CosmosDb",
+                "typeProperties": {
+                    "connectionString": "[parameters('CosmosDb1_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
+            "type": "Microsoft.DataFactory/factories/integrationRuntimes",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "type": "SelfHosted",
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CosmosDb2')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "CosmosDb",
+                "typeProperties": {
+                    "connectionString": "[parameters('CosmosDb2_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "DelimitedText",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "container": "datahack"
+                    },
+                    "columnDelimiter": ",",
+                    "escapeChar": "\\",
+                    "firstRowAsHeader": true,
+                    "quoteChar": "\""
+                },
+                "schema": [
+                    {
+                        "name": "Patient ID",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Entry Date",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Zip code",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Country/Region",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Age",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Gender",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Travel outside home country?",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Contact with COVID confirmed case",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Flu Vaccine",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Diabetic",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Cancer history",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Pregnant",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Fever?",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Cough?",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Muscle/body ache?",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Sore throat",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Fatigue",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Chills",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Runny/stuffy nose",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Nausea or vomiting",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Headache",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Abdominal pain",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Diarrhea",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Anosmia",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Date of symptom onset",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Tested previously?",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Date of last test?",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Results of test",
+                        "type": "String"
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CosmosDbSqlApiCollection1')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "CosmosDb1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "CosmosDbSqlApiCollection",
+                "schema": {},
+                "typeProperties": {
+                    "collectionName": "firstassess"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/CosmosDb1')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SurveySource')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "DelimitedText",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "folderPath": "dailysurvey",
+                        "container": "datahack"
+                    },
+                    "columnDelimiter": ",",
+                    "escapeChar": "\\",
+                    "firstRowAsHeader": true,
+                    "quoteChar": "\""
+                },
+                "schema": []
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CosmosDbSqlApiCollection2')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "CosmosDb2",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "CosmosDbSqlApiCollection",
+                "schema": {},
+                "typeProperties": {
+                    "collectionName": "dailysurvey"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/CosmosDb2')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Assessment Data Bulk Load')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "First Assessment",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "DelimitedTextSource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "wildcardFileName": "*",
+                                    "enablePartitionDiscovery": false
+                                },
+                                "formatSettings": {
+                                    "type": "DelimitedTextReadSettings"
+                                }
+                            },
+                            "sink": {
+                                "type": "CosmosDbSqlApiSink",
+                                "writeBehavior": "insert"
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "DelimitedText1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "CosmosDbSqlApiCollection1",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "annotations": []
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+                "[concat(variables('factoryId'), '/datasets/CosmosDbSqlApiCollection1')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Daily Survey Bulk Load')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Daily Survey",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "DelimitedTextSource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "wildcardFileName": "*",
+                                    "enablePartitionDiscovery": false
+                                },
+                                "formatSettings": {
+                                    "type": "DelimitedTextReadSettings"
+                                }
+                            },
+                            "sink": {
+                                "type": "CosmosDbSqlApiSink",
+                                "writeBehavior": "insert"
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SurveySource",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "CosmosDbSqlApiCollection2",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "annotations": []
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/datasets/SurveySource')]",
+                "[concat(variables('factoryId'), '/datasets/CosmosDbSqlApiCollection2')]"
+            ]
+        }
+    ]
+}
