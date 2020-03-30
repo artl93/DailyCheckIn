@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace FunctionApp1
+namespace DailyCheckInAPIs
 {
     // Class to store daily survey data points for a user collected from DCI Mobile App
     public class DailySurveyData

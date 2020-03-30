@@ -9,9 +9,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace FunctionApp1
+
+namespace DailyCheckInAPIs
 {
-    public static class upsert_daily_survey
+    public static class insert_daily
     {
         // The Azure Cosmos DB endpoint for running this sample.
         private static readonly string EndpointUri = Environment.GetEnvironmentVariable("COSMOS_ENDPOINT");
@@ -33,14 +34,14 @@ namespace FunctionApp1
         private static string containerName = "dailysurvey";
 
         // Azure function triggered when user submits his/her data via DCI Mobile App
-        [FunctionName("upsert_daily_survey")]
+        [FunctionName("insert_daily")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("upsert_daily_survey function processed a request.");
+            log.LogInformation("insert_daily function processed a request.");
 
-            DailySurveyData dailySurveyData = await upsert_daily_survey.PopulateDailySurveyDataFromHttpRequest(req);
+            DailySurveyData dailySurveyData = await insert_daily.PopulateDailySurveyDataFromHttpRequest(req);
             dailySurveyData.EntryDate = DateTime.Today.Date.ToString();
             
             string responseMessage = "";
@@ -53,7 +54,7 @@ namespace FunctionApp1
             else 
             {
                 // Input user data to Cosmos DB
-                await upsert_daily_survey.WriteToCosmosDB(dailySurveyData);                
+                await insert_daily.WriteToCosmosDB(dailySurveyData);                
                 responseMessage = "{\"result\":\"wrote " + 1 + " record(s) to db\"}";               
                     return new OkObjectResult(responseMessage);
             }           
@@ -67,6 +68,13 @@ namespace FunctionApp1
             string requestBody = await new StreamReader(request.Body).ReadToEndAsync();
             DailySurveyData dailySurveyData = JsonConvert.DeserializeObject<DailySurveyData>(requestBody);
 
+            // add time stamp
+            dailySurveyData.Id = Guid.NewGuid().ToString();
+            dailySurveyData.EntryDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ssffff");
+
+            Console.WriteLine("\n\nMy surveyData");
+            Console.WriteLine(dailySurveyData.ToString());
+
             return dailySurveyData;
         }
 
@@ -74,27 +82,27 @@ namespace FunctionApp1
         private static async Task WriteToCosmosDB(DailySurveyData dailySurveyData) 
         {
             // Create a new instance of the Cosmos Client
-            upsert_daily_survey.cosmosClient = new CosmosClient(EndpointUri, PrimaryKey, new CosmosClientOptions() { ApplicationName = "CosmosDBDotnetQuickstart" });
-            await upsert_daily_survey.CreateDatabaseAsync();
-            await upsert_daily_survey.CreateContainerAsync();
-            await upsert_daily_survey.ScaleContainerAsync();
-            await upsert_daily_survey.AddItemsToContainerAsync(dailySurveyData);
+            insert_daily.cosmosClient = new CosmosClient(EndpointUri, PrimaryKey, new CosmosClientOptions() { ApplicationName = "CosmosDBDotnetQuickstart" });
+            await insert_daily.CreateDatabaseAsync();
+            await insert_daily.CreateContainerAsync();
+            await insert_daily.ScaleContainerAsync();
+            await insert_daily.AddItemsToContainerAsync(dailySurveyData);
         }
 
         // Create the database if it doesn't exist
         private static async Task CreateDatabaseAsync()
         {
             // Create a new database
-            upsert_daily_survey.database = await upsert_daily_survey.cosmosClient.CreateDatabaseIfNotExistsAsync(upsert_daily_survey.databaseName);
-            Console.WriteLine("Created Database: {0}\n", upsert_daily_survey.database.Id);
+            insert_daily.database = await insert_daily.cosmosClient.CreateDatabaseIfNotExistsAsync(insert_daily.databaseName);
+            Console.WriteLine("Created Database: {0}\n", insert_daily.database.Id);
         }
 
         /// Create the container if it does not exist. 
         private static async Task CreateContainerAsync()
         {
             // Create a new container
-            upsert_daily_survey.container = await upsert_daily_survey.database.CreateContainerIfNotExistsAsync(upsert_daily_survey.containerName, "/entrydate", 400);
-            Console.WriteLine("Created Container: {0}\n", upsert_daily_survey.container.Id);
+            insert_daily.container = await insert_daily.database.CreateContainerIfNotExistsAsync(insert_daily.containerName, "/entrydate", 400);
+            Console.WriteLine("Created Container: {0}\n", insert_daily.container.Id);
         }
 
         /// Scale the throughput provisioned on an existing Container.
@@ -102,13 +110,13 @@ namespace FunctionApp1
         private static async Task ScaleContainerAsync()
         {
             // Read the current throughput
-            int? throughput = await upsert_daily_survey.container.ReadThroughputAsync();
+            int? throughput = await insert_daily.container.ReadThroughputAsync();
             if (throughput.HasValue)
             {
                 Console.WriteLine("Current provisioned throughput : {0}\n", throughput.Value);
                 int newThroughput = throughput.Value + 100;
                 // Update throughput
-                await upsert_daily_survey.container.ReplaceThroughputAsync(newThroughput);
+                await insert_daily.container.ReplaceThroughputAsync(newThroughput);
                 Console.WriteLine("New provisioned throughput : {0}\n", newThroughput);
             }
             
@@ -120,7 +128,7 @@ namespace FunctionApp1
             try
             {
                 // Create an item in the container representing the user data. Note we provide the value of the partition key for upsert_daily_survey item, which is "Andersen"
-                ItemResponse<DailySurveyData> dailySurveyDataResponse = await upsert_daily_survey.container.CreateItemAsync<DailySurveyData>(dailySurveyData, new PartitionKey(dailySurveyData.EntryDate));
+                ItemResponse<DailySurveyData> dailySurveyDataResponse = await insert_daily.container.CreateItemAsync<DailySurveyData>(dailySurveyData, new PartitionKey(dailySurveyData.EntryDate));
 
                 // Note that after creating the item, we can access the body of the item with the Resource property off the ItemResponse. We can also access the RequestCharge property to see the amount of RUs consumed on this request.
                 Console.WriteLine("Created item in database with id: {0} Operation consumed {1} RUs.\n", dailySurveyDataResponse.Resource.Id, dailySurveyDataResponse.RequestCharge);
