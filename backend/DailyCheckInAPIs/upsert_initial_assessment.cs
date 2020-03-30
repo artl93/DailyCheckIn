@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Azure.Cosmos;
-using System.Collections.Generic;
 
 namespace FunctionApp1
 {
@@ -36,7 +35,7 @@ namespace FunctionApp1
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            FirstAssess data = JsonConvert.DeserializeObject<FirstAssess>(requestBody);
+            InitialAssessmentData data = JsonConvert.DeserializeObject<InitialAssessmentData>(requestBody);
                         
             // Input user data to SQL DB
             await upsert_initial_assessment.queryFromFirstAssess(data);
@@ -44,7 +43,7 @@ namespace FunctionApp1
             return new OkObjectResult(responseMessage);
         }
 
-        private static async Task queryFromFirstAssess(FirstAssess userData)
+        private static async Task queryFromFirstAssess(InitialAssessmentData userData)
         {
 
             // Create a new instance of the Cosmos Client
@@ -70,12 +69,12 @@ namespace FunctionApp1
             Console.WriteLine("Created Container: {0}\n", container.Id);
         }
 
-        private static async Task AddItemsToContainerAsync(FirstAssess data)
+        private static async Task AddItemsToContainerAsync(InitialAssessmentData data)
         {
-            ItemResponse<FirstAssess> assessResponse = null;
+            ItemResponse<InitialAssessmentData> assessResponse = null;
 
             // Create a family object for the Andersen family
-            FirstAssess assess = new FirstAssess
+            InitialAssessmentData assess = new InitialAssessmentData
             {
                 Id = Guid.NewGuid().ToString(),
                 PatientId = data.PatientId,
@@ -111,7 +110,7 @@ namespace FunctionApp1
             try
             {
                 // Create an item in the container representing the Andersen family. Note we provide the value of the partition key for this item, which is "Andersen".
-                assessResponse = await container.CreateItemAsync<FirstAssess>(assess, new PartitionKey(assess.zipcode));
+                assessResponse = await container.CreateItemAsync<InitialAssessmentData>(assess, new PartitionKey(assess.zipcode));
                 // Note that after creating the item, we can access the body of the item with the Resource property of the ItemResponse. We can also access the RequestCharge property to see the amount of RUs consumed on this request.
                 Console.WriteLine("Created item in database with id: {0} Operation consumed {1} RUs.\n", assessResponse.Resource.Id, assessResponse.RequestCharge);
             }
