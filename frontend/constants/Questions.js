@@ -1,5 +1,6 @@
 
 export default {
+
     YES_NO : {'N':'No','Y':'Yes',null:'no answer'},
     GENDER : {'F':'Female','M':'Male','O':'Other'},
 
