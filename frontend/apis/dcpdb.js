@@ -1,57 +1,18 @@
-const insert_api = 'https://covidfnapp.azurewebsites.net/api/upsert_initial_assessment?code=C31oHpTKBFeL94L3Wl759wrUiPb37VXgQvSe7WucFfH4UiZO1XVcEw=='
-
+// const insert_api = 'https://covidfnapp.azurewebsites.net/api/upsert_initial_assessment?code=C31oHpTKBFeL94L3Wl759wrUiPb37VXgQvSe7WucFfH4UiZO1XVcEw=='
 // local
-// const insert_api = 'http://localhost:7071/api/upsert_initial_assessment/'
+const insert_api = 'http://192.168.0.15:7071/api/upsert_person?mykey=123'
 
 const headers = {
+  'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
 
 export const insert = (userData) => {
 
-    let params = ''
-
-    if (userData.email !== null)
-      params += `&email=${userData.email}`
-
-    if (userData.feelingRating !== null)
-      params += `&location=${userData.location}`
-
-    if (userData.feverChillsRating !== null)
-      params += `&ageGroup=${userData.ageGroup}`
-
-    if (userData.temperature !== null)
-      params += `&diabetes=${userData.diabetes}`
-
-    if (userData.coughRating !== null)
-      params += `&cancer=${userData.cancer}`
-
-    if (userData.shortnessOfBreathRating !== null)
-      params += `&gender=${userData.gender}`
-
-    if (userData.soreThroatRating !== null)
-      params += `&pregnancy=${userData.pregnancy}`
-
-    if (userData.fatigueRating !== null)
-      params += `&asthma=${userData.asthma}`
-
-    if (userData.nauseaRating !== null)
-      params += `&heartKidneyOrLiver=${userData.heartKidneyOrLiver}`
-
-    if (userData.abdominalPainRating !== null)
-      params += `&weakImune=${userData.weakImune}`
-
-    if (userData.diarrheaRating !== null)
-      params += `&traveled=${userData.traveled}`
-
-    if (userData.diarrheaRating !== null)
-      params += `&contact=${userData.contact}`
-
-    if (userData.diarrheaRating !== null)
-      params += `&fluVaccine=${userData.fluVaccine}`   
+    let params = ''  
 
     return fetch(`${insert_api}${params}`, 
-    { headers, method: 'POST' }) 
+    { headers, method: 'POST', body: JSON.stringify(userData) }) 
     .then( (res) =>{
         if (res.status !== 200) {
           return `{"error":"${res.status} - ${res.statusText}"}`
@@ -59,7 +20,10 @@ export const insert = (userData) => {
           return res.json()
     })
     .then( (data) => {
-      return JSON.parse(data)
+      if (typeof data === 'string')
+        return data
+      else
+        return JSON.parse(data)
     })
     .catch(error => { 
       const emsg = typeof error !== 'undefined' ? error.message : 'undefined error'

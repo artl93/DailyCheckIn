@@ -1,0 +1,8 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+        "DB_CONNECTION":"Server=tcp:corona-dci.database.windows.net,1433;Initial Catalog=corona;Persist Security Info=False;User ID=corona_user;Password=Bestalhao@001;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+    }
+}

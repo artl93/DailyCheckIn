@@ -61,19 +61,17 @@ class PersonScreen extends React.Component {
 
     let userData = 
       { 
-        location:this.state.location,
-        ageGroup:this.state.ageGroup,
-        gender:this.state.location,
-        diabetes:this.state.diabetes,
-        cancer:this.state.cancer,
-        pregnancy:this.state.pregnancy,
-        asthma:this.state.asthma,
-        heartKidneyOrLiver:this.state.heartKidneyOrLiver,
-        weakImune:this.state.weakImune,
-        traveled:this.state.traveled,
-        contact:this.state.contact,
-        fluVaccine:this.state.fluVaccine,
-        email: 'blogs@blogs.com'
+        PatientId: 'blogs@blogs.com',
+        Pregnant: this.state.pregnancy,
+        EntryDate: null,
+        zipcode: '94301',
+        Country: 'US',
+        Age: this.state.ageGroup,
+        Gender: this.state.location,
+        external_travel: this.state.traveled,
+        Flu_Vaccine: this.state.fluVaccine,
+        Diabetic: this.state.diabetes,
+        Cancer_history: this.state.cancer
       }
 
     insert( userData ).then( (data) => {
@@ -129,9 +127,9 @@ class PersonScreen extends React.Component {
                 // still working in this */}
 
             <Text style={styles.questionText}>What is your age?</Text>
-            <Picker selectedValue ={this.state.ageGroup} onValueChange = {(value) => this.setState({ageGroup:value})}>
+            <Picker selectedValue={this.state.ageGroup} onValueChange = {(value) => this.setState({ageGroup:value})}>
               {Questions.AGE_GROUP.map((key) =>
-                <Picker.Item label={key} value={key} />
+                <Picker.Item key={key} label={key} value={key} />
               )}
             </Picker>
 

@@ -58,18 +58,17 @@ class HomeScreen extends React.Component {
     const userData = 
       { 
         // TODO: convert to make this non-static
-        email: 'blogs@blogs.com',
-
-        feelingRating: this.state.feelingRating,
-        feverChillsRating: this.state.feverChillsRating,
-        temperature: this.state.temperature,
-        coughRating: this.state.coughRating,
-        shortnessOfBreathRating: this.state.shortnessOfBreathRating,
-        soreThroatRating: this.state.soreThroatRating,
-        fatigueRating: this.state.fatigueRating,
-        nauseaRating: this.state.nauseaRating,
-        abdominalPainRating: this.state.abdominalPainRating,
-        diarrheaRating: this.state.diarrheaRating,
+        PatientId:'blogs@blogs.com', 
+        GeneralFeeling:this.state.feelingRating,
+        Fever_Rating:this.state.feverChillsRating,
+        HighestTemperature: this.state.temperature,
+        Cough_Rating : this.state.coughRating,  
+        ShortnessOfBreath_Rating: this.state.shortnessOfBreathRating,
+        SoreThroat_Rating: this.state.soreThroatRating,
+        Tired_Rating: this.state.fatigueRating,
+        NauseaOrVomiting_Rating: this.state.nauseaRating,
+        AbdominalPain_Rating: this.state.abdominalPainRating,
+        Diarrhea_Rating : this.state.diarrheaRating
       }
 
     insert( userData ).then( (data) => {
