@@ -77,16 +77,16 @@ namespace FunctionApp1
         private static async Task QueryItemsAsync(String param)
         {
             QueryDefinition queryDefinition = new QueryDefinition("SELECT * FROM firstassess WHERE firstassess.PatientId = @ZipInput").WithParameter("@ZipInput", param);
-            FeedIterator<FirstAssess> queryResultSetIterator = container.GetItemQueryIterator<FirstAssess>(queryDefinition);
+            FeedIterator<InitialAssessmentData> queryResultSetIterator = container.GetItemQueryIterator<InitialAssessmentData>(queryDefinition);
 
-            List<FirstAssess> families = new List<FirstAssess>();
+            List<InitialAssessmentData> families = new List<InitialAssessmentData>();
 
             while (queryResultSetIterator.HasMoreResults)
             {
                 try
                 {
-                    FeedResponse<FirstAssess> currentResultSet = await queryResultSetIterator.ReadNextAsync();
-                    foreach (FirstAssess family in currentResultSet)
+                    FeedResponse<InitialAssessmentData> currentResultSet = await queryResultSetIterator.ReadNextAsync();
+                    foreach (InitialAssessmentData family in currentResultSet)
                     {
                         families.Add(family);
 

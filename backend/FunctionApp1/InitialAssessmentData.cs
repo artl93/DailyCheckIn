@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace FunctionApp1
 {
-    public class FirstAssess
+    public class InitialAssessmentData
     {
         [JsonProperty(PropertyName = "id")]
         public String Id { get; set; }
