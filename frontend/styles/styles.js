@@ -188,6 +188,16 @@ const styles = StyleSheet.create({
       color: '#201F1E',
       alignSelf: 'auto'
     },
+
+    inputText: {
+      fontSize: 16,
+      marginTop:20,
+      marginBottom:10,
+      alignSelf: 'flex-start',
+      borderColor: '#201F1E', 
+      borderWidth: 2, 
+      width: 200
+    },
     
     buttonText: {
       fontSize: 18,

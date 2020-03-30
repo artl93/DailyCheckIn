@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert,Picker, Text, TouchableHighlight, View, Switch } from 'react-native'
+import { Alert,Picker, Text, TouchableHighlight, View, Switch, TextInput} from 'react-native'
 import styles from '../styles/styles'
 import Spinner from 'react-native-loading-spinner-overlay'
 import MultipleChoice from '../components/MultipleChoice'
@@ -28,6 +28,7 @@ class PersonScreen extends React.Component {
     traveled:null,
     contact:null,
     fluVaccine:null,
+    postcalCode:'98000',
 
    // form UI state
     spinner:false,
@@ -48,6 +49,7 @@ class PersonScreen extends React.Component {
       traveled:null,
       contact:null,
       fluVaccine:null,
+      postcalCode:'98000',
     })
   }
 
@@ -73,6 +75,7 @@ class PersonScreen extends React.Component {
         traveled:this.state.traveled,
         contact:this.state.contact,
         fluVaccine:this.state.fluVaccine,
+        postcalCode:this.state.postcalCode,
         email: 'blogs@blogs.com'
       }
 
@@ -186,6 +189,10 @@ class PersonScreen extends React.Component {
                             answers = {Questions.YES_NO}
                             parentSetState={ (keySelected) => this.setState({weakImune:keySelected})}/>
 
+            <Text style={styles.ratingText}>
+               Zip Code / Postal Code
+            </Text>
+            <TextInput onchangeText={text => this.setState({postcalCode:text})} autoCompleteType='postal-code' style={styles.inputText}/>
 
             <View style={styles.buttonGroup}>
               <TouchableHighlight style={[styles.button,styles.sideBySideL]} onPress={() => this.clearAllVAlues() } >
