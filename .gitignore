@@ -413,3 +413,6 @@ buck-out/
 
 # keep enviroment files confidential
 **/.env
+
+
+local.settings.json
